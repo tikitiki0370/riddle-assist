@@ -10,7 +10,7 @@ import {
   Container,
 } from "@chakra-ui/react";
 import Alphabet2Number from "@/components/ui/textsolver/Alphabet2Number";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Number2Alphabet from "@/components/ui/textsolver/Number2Alphabet";
 import BrainfuckRunner from "@/components/ui/textsolver/BrainfuckRunner";
@@ -18,6 +18,14 @@ import ReplaceToolbar from "@/components/ui/ReplaceToolbar";
 import KemonoFriendsRunner from "@/components/ui/textsolver/KemonoFriendsRunner";
 
 export default function Home() {
+  return (
+    <Suspense>
+      <HomeContent />
+    </Suspense>
+  );
+}
+
+function HomeContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [target, setTarget] = useState(searchParams.get("q") ?? "");
