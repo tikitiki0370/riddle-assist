@@ -41,23 +41,27 @@ export default function LeftSidebar() {
       <VStack align="stretch" mt={4} gap={2}>
         {isOpen ? (
           <Button
+            asChild
             variant="ghost"
             justifyContent="flex-start"
             w="100%"
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
-            <AiOutlineFontSize /> Text to
+            <Link href="/">
+              <AiOutlineFontSize /> Text to
+            </Link>
           </Button>
         ) : (
           <HStack justify="center">
             <Tooltip content="Text to" positioning={{ placement: "right" }}>
               <IconButton
+                asChild
                 aria-label="Text to"
                 variant="ghost"
                 size="sm"
-                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               >
-                <AiOutlineFontSize />
+                <Link href="/">
+                  <AiOutlineFontSize />
+                </Link>
               </IconButton>
             </Tooltip>
           </HStack>
