@@ -24,7 +24,7 @@ export default function Alphabet2Number({ target }: Alphabet2NumberProps) {
       if (code >= 97 && code <= 122) {
         return code - 97 + 1;
       }
-      return 0;
+      return "";
     });
     setValue(result.join(""));
   }, [target]);

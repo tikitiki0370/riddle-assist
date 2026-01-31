@@ -42,7 +42,7 @@ function HomeContent() {
   };
   return (
     <Box>
-      <Center pb={10}>
+      <Center py={10}>
         <Heading>謎解きツール</Heading>
       </Center>
       <Container w={"60vw"}>

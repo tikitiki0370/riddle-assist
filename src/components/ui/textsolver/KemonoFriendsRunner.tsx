@@ -37,7 +37,7 @@ export default function KemonoFriendsRunner({ target }: KemonoFriendsRunnerProps
   return (
     <Card.Root>
       <Card.Header>
-        <Card.Title>けものフレンズ語 実行結果</Card.Title>
+        <Card.Title>kemono 実行結果</Card.Title>
       </Card.Header>
       <Card.Body>
         {error ? (
