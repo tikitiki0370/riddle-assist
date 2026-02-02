@@ -3,12 +3,14 @@ import { Button, ClientOnly, HStack, IconButton, Skeleton, VStack } from "@chakr
 import { ColorModeIcon, useColorMode } from "@/components/ui/color-mode";
 import { Tooltip } from "@/components/ui/tooltip";
 import { useState } from "react";
-import { LuPanelLeftClose, LuPanelLeftOpen, LuTable } from "react-icons/lu";
+import { LuPanelLeftClose, LuPanelLeftOpen, LuSettings, LuTable } from "react-icons/lu";
+import SettingsDrawer from "@/components/ui/SettingsDrawer";
 import { AiOutlineFontSize } from "react-icons/ai";
 import Link from "next/link";
 
 export default function LeftSidebar() {
   const [isOpen, setIsOpen] = useState(true);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const { colorMode, toggleColorMode } = useColorMode();
   const label = colorMode === "dark" ? "ダークモード" : "ライトモード";
 
@@ -17,7 +19,9 @@ export default function LeftSidebar() {
       as="nav"
       align="stretch"
       w={isOpen ? "250px" : "48px"}
-      minH="100vh"
+      h="100vh"
+      position="sticky"
+      top={0}
       borderRightWidth="1px"
       pt={2}
       pb={4}
@@ -121,6 +125,34 @@ export default function LeftSidebar() {
           )}
         </ClientOnly>
       </VStack>
+
+      <VStack align="stretch" mt="auto" gap={2} px={isOpen ? 0 : undefined}>
+        {isOpen ? (
+          <Button
+            variant="ghost"
+            justifyContent="flex-start"
+            w="100%"
+            onClick={() => setIsSettingsOpen(true)}
+          >
+            <LuSettings /> 設定
+          </Button>
+        ) : (
+          <HStack justify="center">
+            <Tooltip content="設定" positioning={{ placement: "right" }}>
+              <IconButton
+                aria-label="設定"
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsSettingsOpen(true)}
+              >
+                <LuSettings />
+              </IconButton>
+            </Tooltip>
+          </HStack>
+        )}
+      </VStack>
+
+      <SettingsDrawer open={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
     </VStack>
   );
 }

@@ -32,7 +32,7 @@ export default function Alphabet2Number({ target }: Alphabet2NumberProps) {
   return (
     <Card.Root>
       <Card.Header>
-        <Card.Title>アルファベットを数値に変換</Card.Title>
+        <Card.Title>アルファベットを数値</Card.Title>
       </Card.Header>
       <Card.Body>
         <Clipboard.Root value={value}>

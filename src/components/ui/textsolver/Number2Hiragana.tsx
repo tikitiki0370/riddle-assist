@@ -8,18 +8,31 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
-interface Number2AlphabetProps {
+const HIRAGANA = [
+  "あ", "い", "う", "え", "お",
+  "か", "き", "く", "け", "こ",
+  "さ", "し", "す", "せ", "そ",
+  "た", "ち", "つ", "て", "と",
+  "な", "に", "ぬ", "ね", "の",
+  "は", "ひ", "ふ", "へ", "ほ",
+  "ま", "み", "む", "め", "も",
+  "や", "ゆ", "よ",
+  "ら", "り", "る", "れ", "ろ",
+  "わ", "を", "ん",
+];
+
+interface Number2HiraganaProps {
   target: string;
 }
 
-export default function Number2Alphabet({ target }: Number2AlphabetProps) {
+export default function Number2Hiragana({ target }: Number2HiraganaProps) {
   const [value, setValue] = useState(target);
 
   useEffect(() => {
     const result = target.split("").map((char) => {
       const num = parseInt(char, 10);
-      if (num >= 1 && num <= 26) {
-        return String.fromCharCode(num + 96);
+      if (num >= 1 && num <= HIRAGANA.length) {
+        return HIRAGANA[num - 1];
       }
       return "";
     });
@@ -29,7 +42,7 @@ export default function Number2Alphabet({ target }: Number2AlphabetProps) {
   return (
     <Card.Root>
       <Card.Header>
-        <Card.Title>数値をアルファベット</Card.Title>
+        <Card.Title>数値をひらがな</Card.Title>
       </Card.Header>
       <Card.Body>
         <Clipboard.Root value={value}>
