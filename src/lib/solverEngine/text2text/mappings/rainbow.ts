@@ -5,5 +5,6 @@ export const RAINBOW: MappingDefinition = {
   primary: ["赤", "橙", "黄", "緑", "青", "藍", "紫"],
   aliases: [
     ["あか", "だいだい", "き", "みどり", "あお", "あい", "むらさき"],
+    ["Red", "Orange", "Yellow", "Green", "Blue", "Indigo", "Violet"],
   ],
 };
