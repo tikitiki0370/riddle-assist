@@ -1,24 +1,24 @@
 "use client";
 import { Card, Clipboard, Input, InputGroup } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { hiragana2Number } from "@/lib/solverEngine";
+import { number2Zodiac } from "@/lib/solverEngine";
 import { ClipboardIconButton } from "./ClipboardIconButton";
 
-interface Hiragana2NumberProps {
+interface Number2ZodiacProps {
   target: string;
 }
 
-export default function Hiragana2Number({ target }: Hiragana2NumberProps) {
+export default function Number2Zodiac({ target }: Number2ZodiacProps) {
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    setValue(hiragana2Number(target).join(" "));
+    setValue(number2Zodiac(target).join(" "));
   }, [target]);
 
   return (
     <Card.Root>
       <Card.Header>
-        <Card.Title>ひらがなを数値</Card.Title>
+        <Card.Title>数値を十二支</Card.Title>
       </Card.Header>
       <Card.Body>
         <Clipboard.Root value={value}>

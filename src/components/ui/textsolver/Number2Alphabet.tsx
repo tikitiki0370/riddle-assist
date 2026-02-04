@@ -1,29 +1,18 @@
 "use client";
-import {
-  Card,
-  Clipboard,
-  IconButton,
-  Input,
-  InputGroup,
-} from "@chakra-ui/react";
+import { Card, Clipboard, Input, InputGroup } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { number2Alphabet } from "@/lib/solverEngine";
+import { ClipboardIconButton } from "./ClipboardIconButton";
 
 interface Number2AlphabetProps {
   target: string;
 }
 
 export default function Number2Alphabet({ target }: Number2AlphabetProps) {
-  const [value, setValue] = useState(target);
+  const [value, setValue] = useState("");
 
   useEffect(() => {
-    const result = target.split("").map((char) => {
-      const num = parseInt(char, 10);
-      if (num >= 1 && num <= 26) {
-        return String.fromCharCode(num + 96);
-      }
-      return "";
-    });
-    setValue(result.join(" "));
+    setValue(number2Alphabet(target).join(" "));
   }, [target]);
 
   return (
@@ -43,13 +32,3 @@ export default function Number2Alphabet({ target }: Number2AlphabetProps) {
     </Card.Root>
   );
 }
-
-const ClipboardIconButton = () => {
-  return (
-    <Clipboard.Trigger asChild>
-      <IconButton variant="surface" size="xs" me="-2">
-        <Clipboard.Indicator />
-      </IconButton>
-    </Clipboard.Trigger>
-  );
-};

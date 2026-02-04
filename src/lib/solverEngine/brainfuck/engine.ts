@@ -100,25 +100,3 @@ export function execute(ops: BrainfuckOp[]): string {
 
   return output;
 }
-
-export const BRAINFUCK_MAPPING: TokenMapping = {
-  ">": ">",
-  "<": "<",
-  "+": "+",
-  "-": "-",
-  ".": ".",
-  ",": ",",
-  "[": "[",
-  "]": "]",
-};
-
-export const KEMONO_FRIENDS_MAPPING: TokenMapping = {
-  ">": "たのしー！",
-  "<": "すごーい！",
-  "+": "たーのしー！",
-  "-": "すっごーい！",
-  ".": "なにこれなにこれ！",
-  ",": "おもしろーい！",
-  "[": "うわー！",
-  "]": "わーい！",
-};

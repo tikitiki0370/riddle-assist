@@ -1,42 +1,18 @@
 "use client";
-import {
-  Card,
-  Clipboard,
-  IconButton,
-  Input,
-  InputGroup,
-} from "@chakra-ui/react";
+import { Card, Clipboard, Input, InputGroup } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-
-const HIRAGANA = [
-  "あ", "い", "う", "え", "お",
-  "か", "き", "く", "け", "こ",
-  "さ", "し", "す", "せ", "そ",
-  "た", "ち", "つ", "て", "と",
-  "な", "に", "ぬ", "ね", "の",
-  "は", "ひ", "ふ", "へ", "ほ",
-  "ま", "み", "む", "め", "も",
-  "や", "ゆ", "よ",
-  "ら", "り", "る", "れ", "ろ",
-  "わ", "を", "ん",
-];
+import { number2Hiragana } from "@/lib/solverEngine";
+import { ClipboardIconButton } from "./ClipboardIconButton";
 
 interface Number2HiraganaProps {
   target: string;
 }
 
 export default function Number2Hiragana({ target }: Number2HiraganaProps) {
-  const [value, setValue] = useState(target);
+  const [value, setValue] = useState("");
 
   useEffect(() => {
-    const result = target.split("").map((char) => {
-      const num = parseInt(char, 10);
-      if (num >= 1 && num <= HIRAGANA.length) {
-        return HIRAGANA[num - 1];
-      }
-      return "";
-    });
-    setValue(result.join(" "));
+    setValue(number2Hiragana(target).join(" "));
   }, [target]);
 
   return (
@@ -56,13 +32,3 @@ export default function Number2Hiragana({ target }: Number2HiraganaProps) {
     </Card.Root>
   );
 }
-
-const ClipboardIconButton = () => {
-  return (
-    <Clipboard.Trigger asChild>
-      <IconButton variant="surface" size="xs" me="-2">
-        <Clipboard.Indicator />
-      </IconButton>
-    </Clipboard.Trigger>
-  );
-};

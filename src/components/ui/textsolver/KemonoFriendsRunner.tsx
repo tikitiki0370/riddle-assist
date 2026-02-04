@@ -1,18 +1,8 @@
 "use client";
-import {
-  Card,
-  Clipboard,
-  IconButton,
-  Input,
-  InputGroup,
-  Text,
-} from "@chakra-ui/react";
+import { Card, Clipboard, Input, InputGroup, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import {
-  tokenize,
-  execute,
-  KEMONO_FRIENDS_MAPPING,
-} from "@/lib/brainfuckEngine";
+import { tokenize, execute, KEMONO_FRIENDS_MAPPING } from "@/lib/solverEngine";
+import { ClipboardIconButton } from "./ClipboardIconButton";
 
 interface KemonoFriendsRunnerProps {
   target: string;
@@ -55,13 +45,3 @@ export default function KemonoFriendsRunner({ target }: KemonoFriendsRunnerProps
     </Card.Root>
   );
 }
-
-const ClipboardIconButton = () => {
-  return (
-    <Clipboard.Trigger asChild>
-      <IconButton variant="surface" size="xs" me="-2">
-        <Clipboard.Indicator />
-      </IconButton>
-    </Clipboard.Trigger>
-  );
-};
