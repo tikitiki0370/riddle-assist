@@ -3,7 +3,7 @@ import { Button, ClientOnly, HStack, IconButton, Skeleton, VStack } from "@chakr
 import { ColorModeIcon, useColorMode } from "@/components/ui/color-mode";
 import { Tooltip } from "@/components/ui/tooltip";
 import { useState } from "react";
-import { LuPanelLeftClose, LuPanelLeftOpen, LuSettings, LuTable } from "react-icons/lu";
+import { LuLanguages, LuPanelLeftClose, LuPanelLeftOpen, LuSettings, LuTable } from "react-icons/lu";
 import SettingsDrawer from "@/components/ui/SettingsDrawer";
 import { AiOutlineFontSize } from "react-icons/ai";
 import Link from "next/link";
@@ -51,7 +51,7 @@ export default function LeftSidebar() {
             w="100%"
           >
             <Link href="/">
-              <AiOutlineFontSize /> Text to
+              <AiOutlineFontSize /> Text Converter
             </Link>
           </Button>
         ) : (
@@ -93,6 +93,34 @@ export default function LeftSidebar() {
               >
                 <Link href="/sheet">
                   <LuTable />
+                </Link>
+              </IconButton>
+            </Tooltip>
+          </HStack>
+        )}
+
+        {isOpen ? (
+          <Button
+            asChild
+            variant="ghost"
+            justifyContent="flex-start"
+            w="100%"
+          >
+            <Link href="/mapping">
+              <LuLanguages /> Text Mapping
+            </Link>
+          </Button>
+        ) : (
+          <HStack justify="center">
+            <Tooltip content="Text Mapping" positioning={{ placement: "right" }}>
+              <IconButton
+                asChild
+                aria-label="Text Mapping"
+                variant="ghost"
+                size="sm"
+              >
+                <Link href="/mapping">
+                  <LuLanguages />
                 </Link>
               </IconButton>
             </Tooltip>
