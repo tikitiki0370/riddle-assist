@@ -9,9 +9,11 @@ export {
   CALENDAR,
   MUSICAL_SCALE,
   RAINBOW,
+  MORSE_ALPHABET,
+  MORSE_HIRAGANA,
 } from "./mappings";
 
-// 汎用コンバーター
+// コンバーター
 export {
   alphabet2Number,
   number2Alphabet,
@@ -20,6 +22,10 @@ export {
   tokenToNumber,
   numberToToken,
   caesarShift,
+  text2Morse,
+  text2MorseJa,
+  morse2Text,
+  morse2TextJa,
 } from "./converters";
 
 // 便利関数: 各変換を直接呼び出せるように

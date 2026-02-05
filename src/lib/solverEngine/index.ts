@@ -26,6 +26,11 @@ export {
   tokenToNumber,
   numberToToken,
   caesarShift,
+  // モールス信号
+  text2Morse,
+  text2MorseJa,
+  morse2Text,
+  morse2TextJa,
   // 便利関数
   text2Number,
   alphabet2Number,

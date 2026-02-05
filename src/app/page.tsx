@@ -32,6 +32,8 @@ import Number2MusicalScale from "@/components/ui/textsolver/Number2MusicalScale"
 import Rainbow2Number from "@/components/ui/textsolver/Rainbow2Number";
 import Number2Rainbow from "@/components/ui/textsolver/Number2Rainbow";
 import CaesarShift from "@/components/ui/textsolver/CaesarShift";
+import Text2Morse from "@/components/ui/textsolver/Text2Morse";
+import Morse2Text from "@/components/ui/textsolver/Morse2Text";
 import { LuPlus } from "react-icons/lu";
 import SolverSelectDialog from "@/components/ui/textsolver/SolverSelectDialog";
 
@@ -62,6 +64,8 @@ const SOLVER_COMPONENTS: SolverDef[] = [
   { id: "brainfuck", label: "Brainfuck", component: BrainfuckRunner },
   { id: "kemono", label: "けものフレンズ(Brainfuck)", component: KemonoFriendsRunner },
   { id: "caesar", label: "シーザー暗号", component: CaesarShift },
+  { id: "text2morse", label: "テキスト→モールス", component: Text2Morse },
+  { id: "morse2text", label: "モールス→テキスト", component: Morse2Text },
 ];
 
 const DEFAULT_VISIBLE = new Set([
