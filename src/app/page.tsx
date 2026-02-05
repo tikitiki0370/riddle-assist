@@ -19,6 +19,18 @@ import KemonoFriendsRunner from "@/components/ui/textsolver/KemonoFriendsRunner"
 import Number2Hiragana from "@/components/ui/textsolver/Number2Hiragana";
 import Alphabet2Number from "@/components/ui/textsolver/Alphabet2Number";
 import Hiragana2Number from "@/components/ui/textsolver/Hiragana2Number";
+import Iroha2Number from "@/components/ui/textsolver/Iroha2Number";
+import Number2Iroha from "@/components/ui/textsolver/Number2Iroha";
+import Zodiac2Number from "@/components/ui/textsolver/Zodiac2Number";
+import Number2Zodiac from "@/components/ui/textsolver/Number2Zodiac";
+import StarSign2Number from "@/components/ui/textsolver/StarSign2Number";
+import Number2StarSign from "@/components/ui/textsolver/Number2StarSign";
+import Calendar2Number from "@/components/ui/textsolver/Calendar2Number";
+import Number2Calendar from "@/components/ui/textsolver/Number2Calendar";
+import MusicalScale2Number from "@/components/ui/textsolver/MusicalScale2Number";
+import Number2MusicalScale from "@/components/ui/textsolver/Number2MusicalScale";
+import Rainbow2Number from "@/components/ui/textsolver/Rainbow2Number";
+import Number2Rainbow from "@/components/ui/textsolver/Number2Rainbow";
 import { LuPlus } from "react-icons/lu";
 import SolverSelectDialog from "@/components/ui/textsolver/SolverSelectDialog";
 
@@ -30,10 +42,22 @@ interface SolverDef {
 
 const SOLVER_COMPONENTS: SolverDef[] = [
   { id: "text2number", label: "文字を数値に", component: Text2Number },
-  { id: "number2alphabet", label: "数値をアルファベット", component: Number2Alphabet },
-  { id: "number2hiragana", label: "数値をひらがな", component: Number2Hiragana },
-  { id: "alphabet2number", label: "アルファベットを数値", component: Alphabet2Number },
-  { id: "hiragana2number", label: "ひらがなを数値", component: Hiragana2Number },
+  { id: "number2alphabet", label: "数値→アルファベット", component: Number2Alphabet },
+  { id: "alphabet2number", label: "アルファベット→数値", component: Alphabet2Number },
+  { id: "number2hiragana", label: "数値→ひらがな", component: Number2Hiragana },
+  { id: "hiragana2number", label: "ひらがな→数値", component: Hiragana2Number },
+  { id: "number2iroha", label: "数値→いろは", component: Number2Iroha },
+  { id: "iroha2number", label: "いろは→数値", component: Iroha2Number },
+  { id: "number2zodiac", label: "数値→干支", component: Number2Zodiac },
+  { id: "zodiac2number", label: "干支→数値", component: Zodiac2Number },
+  { id: "number2starsign", label: "数値→星座", component: Number2StarSign },
+  { id: "starsign2number", label: "星座→数値", component: StarSign2Number },
+  { id: "number2calendar", label: "数値→曜日", component: Number2Calendar },
+  { id: "calendar2number", label: "曜日→数値", component: Calendar2Number },
+  { id: "number2musicalscale", label: "数値→音階", component: Number2MusicalScale },
+  { id: "musicalscale2number", label: "音階→数値", component: MusicalScale2Number },
+  { id: "number2rainbow", label: "数値→虹色", component: Number2Rainbow },
+  { id: "rainbow2number", label: "虹色→数値", component: Rainbow2Number },
   { id: "brainfuck", label: "Brainfuck", component: BrainfuckRunner },
   { id: "kemono", label: "けものフレンズ(Brainfuck)", component: KemonoFriendsRunner },
 ];
