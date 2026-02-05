@@ -1,7 +1,7 @@
 import { MappingEntry, PresetConfig } from "@/types/mapping";
 
 // プリセットID一覧（コード内で定義）
-export const PRESET_IDS = ["dancing-men", "electroharmonix"] as const;
+export const PRESET_IDS = ["dancing-men", "electroharmonix", "utopia"] as const;
 
 // デフォルトマッピング（新規作成用）
 export const DEFAULT_MAPPINGS: Record<string, MappingEntry[]> = {

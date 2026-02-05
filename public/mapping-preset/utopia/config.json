@@ -1,0 +1,31 @@
+{
+  "id": "utopia",
+  "name": "Utopia",
+  "type": "image",
+  "description": "ユートピア文字",
+  "thumbnail": "thumbnail.png",
+  "mappings": [
+    { "display": "A", "imageUrl": "images/A.png", "output": "A" },
+    { "display": "B", "imageUrl": "images/B.png", "output": "B" },
+    { "display": "C", "imageUrl": "images/C.png", "output": "C" },
+    { "display": "D", "imageUrl": "images/D.png", "output": "D" },
+    { "display": "E", "imageUrl": "images/E.png", "output": "E" },
+    { "display": "F", "imageUrl": "images/F.png", "output": "F" },
+    { "display": "G", "imageUrl": "images/G.png", "output": "G" },
+    { "display": "H", "imageUrl": "images/H.png", "output": "H" },
+    { "display": "I", "imageUrl": "images/I.png", "output": "I" },
+    { "display": "K", "imageUrl": "images/K.png", "output": "K" },
+    { "display": "L", "imageUrl": "images/L.png", "output": "L" },
+    { "display": "M", "imageUrl": "images/M.png", "output": "M" },
+    { "display": "N", "imageUrl": "images/N.png", "output": "N" },
+    { "display": "O", "imageUrl": "images/O.png", "output": "O" },
+    { "display": "P", "imageUrl": "images/P.png", "output": "P" },
+    { "display": "Q", "imageUrl": "images/Q.png", "output": "Q" },
+    { "display": "R", "imageUrl": "images/R.png", "output": "R" },
+    { "display": "S", "imageUrl": "images/S.png", "output": "S" },
+    { "display": "T", "imageUrl": "images/T.png", "output": "T" },
+    { "display": "V", "imageUrl": "images/V.png", "output": "V" },
+    { "display": "X", "imageUrl": "images/X.png", "output": "X" },
+    { "display": "Y", "imageUrl": "images/Y.png", "output": "Y" }
+  ]
+}
