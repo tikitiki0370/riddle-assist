@@ -1,0 +1,84 @@
+"use client";
+import {
+  Box,
+  Button,
+  Center,
+  Clipboard,
+  Container,
+  Heading,
+  HStack,
+  Input,
+  InputGroup,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
+import { useCallback, useState } from "react";
+import { LuCheck, LuCopy } from "react-icons/lu";
+import FlickInput from "@/components/ui/flickinput/FlickInput";
+import MeshInput from "@/components/ui/meshinput/MeshInput";
+import { FLICK_KEYS, FLICK_KEYS_EN } from "@/lib/flickInput/keyMapping";
+
+export default function InputPage() {
+  const [result, setResult] = useState("");
+
+  const handleInput = useCallback((char: string) => {
+    setResult((prev) => prev + char);
+  }, []);
+
+  return (
+    <Box py={10}>
+      <Center pb={10}>
+        <Heading>Input Text</Heading>
+      </Center>
+      <Container w={"60vw"}>
+        <VStack gap={6} align="stretch">
+          {/* Result - Sticky */}
+          <Box
+            position="sticky"
+            top={0}
+            zIndex={10}
+            bg={{ base: "white", _dark: "gray.900" }}
+            py={2}
+            mx={-4}
+            px={4}
+          >
+            <Clipboard.Root value={result}>
+              <InputGroup
+                endElement={
+                  <Clipboard.Trigger asChild>
+                    <Button variant="ghost" size="sm">
+                      <Clipboard.Indicator copied={<LuCheck />}>
+                        <LuCopy />
+                      </Clipboard.Indicator>
+                    </Button>
+                  </Clipboard.Trigger>
+                }
+              >
+                <Input
+                  value={result}
+                  onChange={(e) => setResult(e.target.value)}
+                  placeholder="入力した文字がここに表示されます..."
+                />
+              </InputGroup>
+            </Clipboard.Root>
+          </Box>
+
+          {/* フリック入力 */}
+          <HStack gap={8} justify="center" align="start" flexWrap="wrap">
+            <VStack gap={1}>
+              <Text fontSize="xs" color="gray.400">日本語</Text>
+              <FlickInput onInput={handleInput} keys={FLICK_KEYS} columns={3} />
+            </VStack>
+            <VStack gap={1}>
+              <Text fontSize="xs" color="gray.400">English</Text>
+              <FlickInput onInput={handleInput} keys={FLICK_KEYS_EN} columns={3} />
+            </VStack>
+          </HStack>
+
+          {/* メッシュ暗号入力 */}
+          <MeshInput onInput={handleInput} />
+        </VStack>
+      </Container>
+    </Box>
+  );
+}

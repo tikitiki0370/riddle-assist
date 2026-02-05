@@ -3,7 +3,7 @@ import { Button, ClientOnly, HStack, IconButton, Skeleton, VStack } from "@chakr
 import { ColorModeIcon, useColorMode } from "@/components/ui/color-mode";
 import { Tooltip } from "@/components/ui/tooltip";
 import { useState } from "react";
-import { LuLanguages, LuPanelLeftClose, LuPanelLeftOpen, LuSettings, LuTable } from "react-icons/lu";
+import { LuGrid3X3, LuLanguages, LuPanelLeftClose, LuPanelLeftOpen, LuSettings, LuTable } from "react-icons/lu";
 import SettingsDrawer from "@/components/ui/SettingsDrawer";
 import { AiOutlineFontSize } from "react-icons/ai";
 import Link from "next/link";
@@ -121,6 +121,34 @@ export default function LeftSidebar() {
               >
                 <Link href="/mapping">
                   <LuLanguages />
+                </Link>
+              </IconButton>
+            </Tooltip>
+          </HStack>
+        )}
+
+        {isOpen ? (
+          <Button
+            asChild
+            variant="ghost"
+            justifyContent="flex-start"
+            w="100%"
+          >
+            <Link href="/input">
+              <LuGrid3X3 /> Input Text
+            </Link>
+          </Button>
+        ) : (
+          <HStack justify="center">
+            <Tooltip content="Input Text" positioning={{ placement: "right" }}>
+              <IconButton
+                asChild
+                aria-label="Input Text"
+                variant="ghost"
+                size="sm"
+              >
+                <Link href="/input">
+                  <LuGrid3X3 />
                 </Link>
               </IconButton>
             </Tooltip>
