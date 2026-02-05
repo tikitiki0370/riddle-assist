@@ -57,3 +57,34 @@ export function numberToChar(input: string, mapping: MappingDefinition): Convert
     return "";
   });
 }
+
+/**
+ * シーザー暗号: 文字を指定した数だけシフトする
+ * アルファベット、ひらがな、カタカナに対応
+ */
+export function caesarShift(input: string, shift: number): string {
+  return input.split("").map((char) => {
+    const code = char.charCodeAt(0);
+
+    // 大文字 A-Z (65-90)
+    if (code >= 65 && code <= 90) {
+      return String.fromCharCode(((code - 65 + shift) % 26 + 26) % 26 + 65);
+    }
+    // 小文字 a-z (97-122)
+    if (code >= 97 && code <= 122) {
+      return String.fromCharCode(((code - 97 + shift) % 26 + 26) % 26 + 97);
+    }
+    // ひらがな あ-ん (12353-12435, 83文字 ぁ-ん)
+    if (code >= 12353 && code <= 12435) {
+      const hiraganaLen = 12435 - 12353 + 1;
+      return String.fromCharCode(((code - 12353 + shift) % hiraganaLen + hiraganaLen) % hiraganaLen + 12353);
+    }
+    // カタカナ ア-ン (12449-12531, 83文字 ァ-ン)
+    if (code >= 12449 && code <= 12531) {
+      const katakanaLen = 12531 - 12449 + 1;
+      return String.fromCharCode(((code - 12449 + shift) % katakanaLen + katakanaLen) % katakanaLen + 12449);
+    }
+
+    return char;
+  }).join("");
+}

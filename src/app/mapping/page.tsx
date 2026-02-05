@@ -19,6 +19,7 @@ import { Suspense, useState } from "react";
 import { LuCheck, LuCopy, LuDelete, LuSpace, LuTrash2 } from "react-icons/lu";
 import CreateMappingModal from "@/components/ui/mapping/CreateMappingModal";
 import MappingCard from "@/components/ui/mapping/MappingCard";
+import MappingPreview from "@/components/ui/mapping/MappingPreview";
 import { useMappingPresets } from "@/hooks/useMappingPresets";
 import { useResultInput } from "@/hooks/useResultInput";
 
@@ -115,6 +116,14 @@ function MappingPageContent() {
               />
             </InputGroup>
           </Clipboard.Root>
+
+          {/* Preview */}
+          <MappingPreview
+            result={result}
+            mappings={mappings}
+            activePreset={activePreset}
+            activeFontFamily={activeFontFamily}
+          />
 
           {/* Mode Toggle (only for custom font) */}
           {!isPresetActive && (

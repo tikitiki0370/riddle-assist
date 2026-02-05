@@ -3,6 +3,7 @@ export {
   number2Alphabet,
   charToNumber,
   numberToChar,
+  caesarShift,
 } from "./charBased";
 
 export {

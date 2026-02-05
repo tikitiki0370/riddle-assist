@@ -19,6 +19,7 @@ export {
   numberToChar,
   tokenToNumber,
   numberToToken,
+  caesarShift,
 } from "./converters";
 
 // 便利関数: 各変換を直接呼び出せるように

@@ -42,9 +42,8 @@ export default function MappingCard({
       variant="outline"
       cursor="pointer"
       onClick={onClick}
-      borderColor={isActive ? "blue.500" : undefined}
-      borderWidth={isActive ? 2 : 1}
-      _hover={{ borderColor: "blue.400" }}
+      boxShadow={isActive ? "0 0 0 2px var(--chakra-colors-blue-500)" : undefined}
+      _hover={isActive ? undefined : { boxShadow: "0 0 0 1px var(--chakra-colors-gray-400)" }}
     >
       <Card.Body>
         <VStack gap={2}>

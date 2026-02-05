@@ -25,6 +25,7 @@ export {
   numberToChar,
   tokenToNumber,
   numberToToken,
+  caesarShift,
   // 便利関数
   text2Number,
   alphabet2Number,
