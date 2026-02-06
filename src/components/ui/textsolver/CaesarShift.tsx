@@ -6,9 +6,10 @@ import { ClipboardIconButton } from "./ClipboardIconButton";
 
 interface CaesarShiftProps {
   target: string;
+  separator: string;
 }
 
-export default function CaesarShift({ target }: CaesarShiftProps) {
+export default function CaesarShift({ target, separator: _separator }: CaesarShiftProps) {
   const [shift, setShift] = useState(1);
   const [value, setValue] = useState("");
 

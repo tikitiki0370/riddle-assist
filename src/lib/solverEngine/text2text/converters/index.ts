@@ -4,6 +4,7 @@ export {
   charToNumber,
   numberToChar,
   caesarShift,
+  splitBySeparator,
 } from "./charBased";
 
 export {

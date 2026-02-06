@@ -6,14 +6,16 @@ import { ClipboardIconButton } from "./ClipboardIconButton";
 
 interface Number2HiraganaProps {
   target: string;
+  separator: string;
 }
 
-export default function Number2Hiragana({ target }: Number2HiraganaProps) {
+export default function Number2Hiragana({ target, separator }: Number2HiraganaProps) {
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    setValue(number2Hiragana(target).join(" "));
-  }, [target]);
+    const result = number2Hiragana(target, separator).filter((r) => r !== "");
+    setValue(result.join(" "));
+  }, [target, separator]);
 
   return (
     <Card.Root>

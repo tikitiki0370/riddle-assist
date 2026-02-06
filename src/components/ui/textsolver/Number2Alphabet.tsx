@@ -6,14 +6,16 @@ import { ClipboardIconButton } from "./ClipboardIconButton";
 
 interface Number2AlphabetProps {
   target: string;
+  separator: string;
 }
 
-export default function Number2Alphabet({ target }: Number2AlphabetProps) {
+export default function Number2Alphabet({ target, separator }: Number2AlphabetProps) {
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    setValue(number2Alphabet(target).join(" "));
-  }, [target]);
+    const result = number2Alphabet(target, separator).filter((r) => r !== "");
+    setValue(result.join(" "));
+  }, [target, separator]);
 
   return (
     <Card.Root>

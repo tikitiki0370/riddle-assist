@@ -6,14 +6,16 @@ import { ClipboardIconButton } from "./ClipboardIconButton";
 
 interface Number2StarSignProps {
   target: string;
+  separator: string;
 }
 
-export default function Number2StarSign({ target }: Number2StarSignProps) {
+export default function Number2StarSign({ target, separator }: Number2StarSignProps) {
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    setValue(number2StarSign(target).join(" "));
-  }, [target]);
+    const result = number2StarSign(target, separator).filter((r) => r !== "");
+    setValue(result.join(" "));
+  }, [target, separator]);
 
   return (
     <Card.Root>

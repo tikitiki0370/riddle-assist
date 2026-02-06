@@ -67,7 +67,7 @@ function MappingPageContent() {
       <Center pb={10}>
         <Heading>テキストマッピング</Heading>
       </Center>
-      <Container w={"60vw"}>
+      <Container w="60vw">
         <VStack gap={6} align="stretch">
           {/* Preset Cards */}
           <Box overflowX="auto" overflowY="hidden" p={1}>
@@ -150,7 +150,7 @@ function MappingPageContent() {
           )}
 
           {/* Character Grid */}
-          <SimpleGrid columns={7} gap={2}>
+          <SimpleGrid minChildWidth="60px" gap={2}>
             {mappings.map((entry, index) => {
               const displayText = activePreset?.caseSensitive
                 ? entry.display
@@ -184,7 +184,7 @@ function MappingPageContent() {
           </SimpleGrid>
 
           {/* Control Buttons */}
-          <HStack gap={2}>
+          <HStack gap={2} flexWrap="wrap">
             <Button variant="outline" onClick={handleSpace}>
               <LuSpace /> Space
             </Button>

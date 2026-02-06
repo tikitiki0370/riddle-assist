@@ -6,14 +6,16 @@ import { ClipboardIconButton } from "./ClipboardIconButton";
 
 interface Number2RainbowProps {
   target: string;
+  separator: string;
 }
 
-export default function Number2Rainbow({ target }: Number2RainbowProps) {
+export default function Number2Rainbow({ target, separator }: Number2RainbowProps) {
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    setValue(number2Rainbow(target).join(" "));
-  }, [target]);
+    const result = number2Rainbow(target, separator).filter((r) => r !== "");
+    setValue(result.join(" "));
+  }, [target, separator]);
 
   return (
     <Card.Root>

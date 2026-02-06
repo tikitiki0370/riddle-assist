@@ -6,9 +6,10 @@ import { ClipboardIconButton } from "./ClipboardIconButton";
 
 interface KemonoFriendsRunnerProps {
   target: string;
+  separator: string;
 }
 
-export default function KemonoFriendsRunner({ target }: KemonoFriendsRunnerProps) {
+export default function KemonoFriendsRunner({ target, separator: _separator }: KemonoFriendsRunnerProps) {
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
 

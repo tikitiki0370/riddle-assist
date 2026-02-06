@@ -6,14 +6,16 @@ import { ClipboardIconButton } from "./ClipboardIconButton";
 
 interface Number2IrohaProps {
   target: string;
+  separator: string;
 }
 
-export default function Number2Iroha({ target }: Number2IrohaProps) {
+export default function Number2Iroha({ target, separator }: Number2IrohaProps) {
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    setValue(number2Iroha(target).join(" "));
-  }, [target]);
+    const result = number2Iroha(target, separator).filter((r) => r !== "");
+    setValue(result.join(" "));
+  }, [target, separator]);
 
   return (
     <Card.Root>

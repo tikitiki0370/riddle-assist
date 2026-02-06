@@ -1,12 +1,13 @@
 import type { ConvertResult, MappingDefinition } from "../../types";
+import { splitBySeparator } from "./charBased";
 
 /**
  * 複数文字トークンをマッチさせる変換（tokenBased）
  * 長いトークンを優先してマッチする
  */
 
-/** トークン → 数値 */
-export function tokenToNumber(input: string, mapping: MappingDefinition): ConvertResult {
+/** トークン → 数値 (単一トークンのマッチング処理) */
+function matchTokenToNumber(input: string, mapping: MappingDefinition): ConvertResult {
   // 全てのマッピングリストを結合（primary + aliases）
   const allLists: readonly string[][] = [
     [...mapping.primary],
@@ -44,10 +45,15 @@ export function tokenToNumber(input: string, mapping: MappingDefinition): Conver
   return result;
 }
 
+/** トークン → 数値 */
+export function tokenToNumber(input: string, mapping: MappingDefinition, separator: string): ConvertResult {
+  const tokens = splitBySeparator(input, separator);
+  return tokens.flatMap((token) => matchTokenToNumber(token, mapping));
+}
+
 /** 数値 → トークン（primary配列を使用） */
-export function numberToToken(input: string, mapping: MappingDefinition): ConvertResult {
-  // 区切り文字（スペース、カンマ、全角スペースなど）で分割
-  const tokens = input.split(/[\s,、　]+/).filter(t => t.length > 0);
+export function numberToToken(input: string, mapping: MappingDefinition, separator: string): ConvertResult {
+  const tokens = splitBySeparator(input, separator);
 
   return tokens.map((token) => {
     const num = parseInt(token, 10);

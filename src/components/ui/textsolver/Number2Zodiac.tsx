@@ -6,14 +6,16 @@ import { ClipboardIconButton } from "./ClipboardIconButton";
 
 interface Number2ZodiacProps {
   target: string;
+  separator: string;
 }
 
-export default function Number2Zodiac({ target }: Number2ZodiacProps) {
+export default function Number2Zodiac({ target, separator }: Number2ZodiacProps) {
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    setValue(number2Zodiac(target).join(" "));
-  }, [target]);
+    const result = number2Zodiac(target, separator).filter((r) => r !== "");
+    setValue(result.join(" "));
+  }, [target, separator]);
 
   return (
     <Card.Root>

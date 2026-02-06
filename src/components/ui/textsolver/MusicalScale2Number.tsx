@@ -6,14 +6,16 @@ import { ClipboardIconButton } from "./ClipboardIconButton";
 
 interface MusicalScale2NumberProps {
   target: string;
+  separator: string;
 }
 
-export default function MusicalScale2Number({ target }: MusicalScale2NumberProps) {
+export default function MusicalScale2Number({ target, separator }: MusicalScale2NumberProps) {
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    setValue(musicalScale2Number(target).join(" "));
-  }, [target]);
+    const result = musicalScale2Number(target, separator).filter((r) => r !== "");
+    setValue(result.join(" "));
+  }, [target, separator]);
 
   return (
     <Card.Root>

@@ -6,14 +6,16 @@ import { ClipboardIconButton } from "./ClipboardIconButton";
 
 interface Number2CalendarProps {
   target: string;
+  separator: string;
 }
 
-export default function Number2Calendar({ target }: Number2CalendarProps) {
+export default function Number2Calendar({ target, separator }: Number2CalendarProps) {
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    setValue(number2Calendar(target).join(" "));
-  }, [target]);
+    const result = number2Calendar(target, separator).filter((r) => r !== "");
+    setValue(result.join(" "));
+  }, [target, separator]);
 
   return (
     <Card.Root>

@@ -5,7 +5,10 @@ import {
   Center,
   ClientOnly,
   Heading,
+  HStack,
+  Input,
   SimpleGrid,
+  Text,
   Textarea,
   Container,
 } from "@chakra-ui/react";
@@ -40,7 +43,7 @@ import SolverSelectDialog from "@/components/ui/textsolver/SolverSelectDialog";
 interface SolverDef {
   id: string;
   label: string;
-  component: ComponentType<{ target: string }>;
+  component: ComponentType<{ target: string; separator: string }>;
 }
 
 const SOLVER_COMPONENTS: SolverDef[] = [
@@ -73,6 +76,19 @@ const DEFAULT_VISIBLE = new Set([
 ]);
 
 const STORAGE_KEY = "riddle-assist-visible-solvers";
+const SEPARATOR_STORAGE_KEY = "riddle-assist-separator";
+
+function loadSeparator(): string {
+  try {
+    const raw = localStorage.getItem(SEPARATOR_STORAGE_KEY);
+    if (raw !== null) return raw;
+  } catch { /* ignore */ }
+  return " ";
+}
+
+function saveSeparator(sep: string) {
+  localStorage.setItem(SEPARATOR_STORAGE_KEY, sep);
+}
 
 function loadVisible(): Set<string> {
   try {
@@ -103,9 +119,17 @@ function HomeContent() {
   const [target, setTarget] = useState(searchParams.get("q") ?? "");
   const [visibleSet, setVisibleSet] = useState<Set<string>>(DEFAULT_VISIBLE);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [separator, setSeparator] = useState(" ");
 
   useEffect(() => {
     setVisibleSet(loadVisible());
+    setSeparator(loadSeparator());
+  }, []);
+
+  const handleSeparatorChange = useCallback((value: string) => {
+    const sep = value || " ";
+    setSeparator(sep);
+    saveSeparator(sep);
   }, []);
 
   const toggle = useCallback((id: string, checked: boolean) => {
@@ -144,18 +168,28 @@ function HomeContent() {
           onChange={(e) => handleChange(e.target.value)}
           minH="200px"
         />
-        <Box pt={4}>
+        <HStack pt={4} justify="space-between">
           <Button variant="outline" size="sm" onClick={() => setDialogOpen(true)}>
             <LuPlus /> ツールを追加
           </Button>
-        </Box>
+          <HStack>
+            <Text fontSize="sm">セパレータ:</Text>
+            <Input
+              size="sm"
+              width="80px"
+              placeholder="スペース"
+              value={separator === " " ? "" : separator}
+              onChange={(e) => handleSeparatorChange(e.target.value)}
+            />
+          </HStack>
+        </HStack>
         <Box pt={6}>
           <Center>
             <ClientOnly>
               <SimpleGrid w="100%" columns={{ base: 1, md: 2 }} columnGap={10} rowGap={10}>
                 {SOLVER_COMPONENTS.filter(({ id }) => visibleSet.has(id)).map(
                   ({ id, component: Comp }) => (
-                    <Comp key={id} target={target} />
+                    <Comp key={id} target={target} separator={separator} />
                   )
                 )}
               </SimpleGrid>

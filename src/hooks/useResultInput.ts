@@ -1,11 +1,32 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { MappingEntry } from "@/types/mapping";
 
 export type CaseMode = "lower" | "upper";
 
 export function useResultInput() {
-  const [result, setResult] = useState("");
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const [result, setResult] = useState(searchParams.get("q") ?? "");
   const [caseMode, setCaseModeState] = useState<CaseMode>("upper");
+
+  const searchParamsRef = useRef(searchParams);
+  searchParamsRef.current = searchParams;
+  const isInitialRender = useRef(true);
+
+  useEffect(() => {
+    if (isInitialRender.current) {
+      isInitialRender.current = false;
+      return;
+    }
+    const params = new URLSearchParams(searchParamsRef.current.toString());
+    if (result) {
+      params.set("q", result);
+    } else {
+      params.delete("q");
+    }
+    router.replace(`?${params.toString()}`);
+  }, [result, router]);
 
   const handleCharClick = useCallback((entry: MappingEntry) => {
     const char = caseMode === "lower"

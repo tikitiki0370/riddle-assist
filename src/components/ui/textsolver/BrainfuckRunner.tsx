@@ -6,9 +6,10 @@ import { ClipboardIconButton } from "./ClipboardIconButton";
 
 interface BrainfuckRunnerProps {
   target: string;
+  separator: string;
 }
 
-export default function BrainfuckRunner({ target }: BrainfuckRunnerProps) {
+export default function BrainfuckRunner({ target, separator: _separator }: BrainfuckRunnerProps) {
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
 

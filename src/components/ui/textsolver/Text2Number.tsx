@@ -6,14 +6,16 @@ import { ClipboardIconButton } from "./ClipboardIconButton";
 
 interface Text2NumberProps {
   target: string;
+  separator: string;
 }
 
-export default function Text2Number({ target }: Text2NumberProps) {
+export default function Text2Number({ target, separator }: Text2NumberProps) {
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    setValue(text2Number(target).join(" "));
-  }, [target]);
+    const result = text2Number(target, separator).filter((r) => r !== "");
+    setValue(result.join(" "));
+  }, [target, separator]);
 
   return (
     <Card.Root>

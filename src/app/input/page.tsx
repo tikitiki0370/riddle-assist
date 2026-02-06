@@ -15,6 +15,7 @@ import {
 import { useCallback, useState } from "react";
 import { LuCheck, LuCopy } from "react-icons/lu";
 import FlickInput from "@/components/ui/flickinput/FlickInput";
+import GojuonInput from "@/components/ui/gojuoninput/GojuonInput";
 import MeshInput from "@/components/ui/meshinput/MeshInput";
 import { FLICK_KEYS, FLICK_KEYS_EN } from "@/lib/flickInput/keyMapping";
 
@@ -62,6 +63,12 @@ export default function InputPage() {
               </InputGroup>
             </Clipboard.Root>
           </Box>
+
+          {/* 五十音表 */}
+          <VStack gap={1}>
+            <Text fontSize="xs" color="gray.400">50音</Text>
+            <GojuonInput onInput={handleInput} />
+          </VStack>
 
           {/* フリック入力 */}
           <HStack gap={8} justify="center" align="start" flexWrap="wrap">

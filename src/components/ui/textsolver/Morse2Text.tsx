@@ -8,9 +8,10 @@ type Lang = "en" | "ja";
 
 interface Morse2TextProps {
   target: string;
+  separator: string;
 }
 
-export default function Morse2Text({ target }: Morse2TextProps) {
+export default function Morse2Text({ target, separator: _separator }: Morse2TextProps) {
   const [lang, setLang] = useState<Lang>("en");
   const [value, setValue] = useState("");
 
