@@ -14,7 +14,7 @@ const proseMirrorBaseCss = defineStyle({
   flexDirection: "column",
   borderWidth: "1px",
   rounded: "l2",
-  lineHeight: "1.5",
+  lineHeight: "1.3",
 
   "--content-padding-x": "spacing.5",
   "--content-padding-y": "spacing.5",
@@ -30,36 +30,36 @@ const proseMirrorBaseCss = defineStyle({
     minHeight: "var(--content-min-height)",
     px: "var(--content-padding-x)",
     py: "var(--content-padding-y)",
-    "& > * + *": { marginTop: "0.75em" },
+    "& > * + *": { marginTop: "0.4em" },
     "& h1": {
       fontSize: "2.15em",
       letterSpacing: "-0.02em",
-      lineHeight: "1.2em",
+      lineHeight: "1.15em",
     },
     "& h2": {
       fontSize: "1.65em",
       letterSpacing: "-0.02em",
-      lineHeight: "1.3em",
+      lineHeight: "1.2em",
     },
     "& h3": {
       fontSize: "1.35em",
       letterSpacing: "-0.01em",
-      lineHeight: "1.4em",
+      lineHeight: "1.25em",
     },
     "& h4": {
       fontSize: "1.15em",
       letterSpacing: "-0.01em",
-      lineHeight: "1.5em",
+      lineHeight: "1.3em",
     },
     "& h5": {
       fontSize: "1em",
       letterSpacing: "-0.01em",
-      lineHeight: "1.5em",
+      lineHeight: "1.3em",
     },
     "& h6": {
       fontSize: "0.875em",
       letterSpacing: "-0.01em",
-      lineHeight: "1.5em",
+      lineHeight: "1.3em",
     },
     "& h1, h2, h3, h4, h5, h6": {
       color: "fg",
