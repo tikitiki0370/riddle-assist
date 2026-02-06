@@ -15,10 +15,28 @@ export interface ImageOverlayState {
   id: string;
   imageUrl: string | null;
   position: { x: number; y: number };
-  imageWidth: number;
+  panelWidth: number;
+  panelHeight: number;
   opacity: number;
   zIndex: number;
 }
+
+interface ResizeCorner {
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
+  cursor: string;
+  sideH: "left" | "right";
+  sideV: "top" | "bottom";
+}
+
+const resizeCorners: ResizeCorner[] = [
+  { top: 0, left: 0, cursor: "nw-resize", sideH: "left", sideV: "top" },
+  { top: 0, right: 0, cursor: "ne-resize", sideH: "right", sideV: "top" },
+  { bottom: 0, left: 0, cursor: "sw-resize", sideH: "left", sideV: "bottom" },
+  { bottom: 0, right: 0, cursor: "se-resize", sideH: "right", sideV: "bottom" },
+];
 
 interface ImageOverlayPanelProps {
   overlay: ImageOverlayState;
@@ -35,7 +53,16 @@ export default function ImageOverlayPanel({
 }: ImageOverlayPanelProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);
-  const resizeStartRef = useRef<{ startX: number; startWidth: number } | null>(null);
+  const resizeStartRef = useRef<{
+    startX: number;
+    startY: number;
+    startWidth: number;
+    startHeight: number;
+    sideH: "left" | "right";
+    sideV: "top" | "bottom";
+    startPosX: number;
+    startPosY: number;
+  } | null>(null);
 
   const onMove = useCallback(
     (pos: { x: number; y: number }) => onUpdate(overlay.id, { position: pos }),
@@ -100,26 +127,57 @@ export default function ImageOverlayPanel({
     [handleFile]
   );
 
-  // リサイズハンドル用ポインターイベント
+  // リサイズハンドル用ポインターイベント（4隅対応）
   const onResizePointerDown = useCallback(
-    (e: React.PointerEvent) => {
+    (sideH: "left" | "right", sideV: "top" | "bottom", e: React.PointerEvent) => {
       resizeStartRef.current = {
         startX: e.clientX,
-        startWidth: overlay.imageWidth,
+        startY: e.clientY,
+        startWidth: overlay.panelWidth,
+        startHeight: overlay.panelHeight,
+        sideH,
+        sideV,
+        startPosX: overlay.position.x,
+        startPosY: overlay.position.y,
       };
       (e.target as HTMLElement).setPointerCapture(e.pointerId);
       e.preventDefault();
       e.stopPropagation();
     },
-    [overlay.imageWidth]
+    [overlay.panelWidth, overlay.panelHeight, overlay.position.x, overlay.position.y]
   );
 
   const onResizePointerMove = useCallback(
     (e: React.PointerEvent) => {
       if (!resizeStartRef.current) return;
-      const delta = e.clientX - resizeStartRef.current.startX;
-      const newWidth = Math.max(50, Math.min(1200, resizeStartRef.current.startWidth + delta));
-      onUpdate(overlay.id, { imageWidth: newWidth });
+      const { startX, startY, startWidth, startHeight, sideH, sideV, startPosX, startPosY } =
+        resizeStartRef.current;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+
+      let newWidth: number, newX: number;
+      if (sideH === "right") {
+        newWidth = Math.max(200, Math.min(1200, startWidth + dx));
+        newX = startPosX;
+      } else {
+        newWidth = Math.max(200, Math.min(1200, startWidth - dx));
+        newX = startPosX + (startWidth - newWidth);
+      }
+
+      let newHeight: number, newY: number;
+      if (sideV === "bottom") {
+        newHeight = Math.max(100, Math.min(1200, startHeight + dy));
+        newY = startPosY;
+      } else {
+        newHeight = Math.max(100, Math.min(1200, startHeight - dy));
+        newY = startPosY + (startHeight - newHeight);
+      }
+
+      onUpdate(overlay.id, {
+        panelWidth: newWidth,
+        panelHeight: newHeight,
+        position: { x: newX, y: newY },
+      });
     },
     [overlay.id, onUpdate]
   );
@@ -135,23 +193,30 @@ export default function ImageOverlayPanel({
       top={`${overlay.position.y}px`}
       zIndex={overlay.zIndex}
       pointerEvents="none"
+      display="flex"
+      flexDirection="column"
+      w={`${overlay.panelWidth}px`}
+      h={`${overlay.panelHeight}px`}
       minW="200px"
+      minH="100px"
       maxW="80vw"
+      borderWidth={1}
+      borderRadius="md"
+      overflow="hidden"
+      boxShadow="sm"
+      bg={!overlay.imageUrl ? { base: "white", _dark: "gray.800" } : undefined}
     >
-      {/* ドラッグハンドル */}
+      {/* 上部ドラッグハンドル */}
       <HStack
         px={2}
         py={1}
+        flexShrink={0}
         bg={{ base: "gray.100", _dark: "gray.700" }}
         cursor="grab"
         userSelect="none"
         touchAction="none"
         justify="space-between"
         pointerEvents="auto"
-        borderTopRadius="md"
-        borderWidth={1}
-        borderBottom="none"
-        boxShadow="sm"
         onPointerDown={(e) => {
           onBringToFront(overlay.id);
           dragHandlers.onPointerDown(e);
@@ -176,51 +241,61 @@ export default function ImageOverlayPanel({
         </IconButton>
       </HStack>
 
-      {/* 画像エリア — pointerEvents="none"で下のコンテンツを操作可能に */}
+      {/* 画像エリア（flex:1 でタブバー以外の領域を埋める） */}
       {overlay.imageUrl ? (
-        <Box opacity={overlay.opacity}>
+        <Box flex={1} minH={0} opacity={overlay.opacity}>
           <img
             src={overlay.imageUrl}
             alt="overlay"
-            width={overlay.imageWidth}
             draggable={false}
-            style={{ display: "block" }}
+            style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
           />
         </Box>
       ) : (
         <Box
-          p={6}
-          textAlign="center"
-          cursor="pointer"
-          borderWidth={2}
-          borderStyle="dashed"
-          borderColor={isDragging ? "blue.500" : "gray.300"}
-          bg={{ base: isDragging ? "blue.50" : "white", _dark: isDragging ? "blue.900" : "gray.800" }}
-          m={2}
-          borderRadius="md"
-          pointerEvents="auto"
-          onDragOver={handleDragOver}
-          onDragLeave={handleDragLeave}
-          onDrop={handleDrop}
-          onPaste={handlePaste}
-          onClick={() => fileInputRef.current?.click()}
-          tabIndex={0}
-          outline="none"
-          _dark={{
-            borderColor: isDragging ? "blue.300" : "gray.600",
-          }}
+          flex={1}
+          minH={0}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          p={2}
         >
-          <input
-            type="file"
-            ref={fileInputRef}
-            onChange={handleFileInput}
-            accept="image/*"
-            style={{ display: "none" }}
-          />
-          <VStack gap={2}>
-            <LuUpload size={24} />
-            <Text fontSize="sm">画像をドロップ/クリック/ペースト</Text>
-          </VStack>
+          <Box
+            w="100%"
+            h="100%"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            cursor="pointer"
+            borderWidth={2}
+            borderStyle="dashed"
+            borderColor={isDragging ? "blue.500" : "gray.300"}
+            bg={{ base: isDragging ? "blue.50" : "transparent", _dark: isDragging ? "blue.900" : "transparent" }}
+            borderRadius="md"
+            pointerEvents="auto"
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+            onPaste={handlePaste}
+            onClick={() => fileInputRef.current?.click()}
+            tabIndex={0}
+            outline="none"
+            _dark={{
+              borderColor: isDragging ? "blue.300" : "gray.600",
+            }}
+          >
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleFileInput}
+              accept="image/*"
+              style={{ display: "none" }}
+            />
+            <VStack gap={2}>
+              <LuUpload size={24} />
+              <Text fontSize="sm">画像をドロップ/クリック/ペースト</Text>
+            </VStack>
+          </Box>
         </Box>
       )}
 
@@ -231,12 +306,10 @@ export default function ImageOverlayPanel({
           py={2}
           gap={2}
           w="100%"
-          borderWidth={1}
-          borderTop="none"
-          borderBottomRadius="md"
+          flexShrink={0}
+          borderTopWidth={1}
           pointerEvents="auto"
           bg={{ base: "white", _dark: "gray.800" }}
-          boxShadow="sm"
         >
           <HStack w="100%" gap={2}>
             <Text fontSize="xs" w="35px" flexShrink={0}>
@@ -264,26 +337,62 @@ export default function ImageOverlayPanel({
         </VStack>
       )}
 
-      {/* リサイズハンドル（パネル外枠の右下角） */}
-      {overlay.imageUrl && (
+      {/* 下部ドラッグハンドル — バツボタンは左側（対角配置） */}
+      <HStack
+        px={2}
+        py={1}
+        flexShrink={0}
+        bg={{ base: "gray.100", _dark: "gray.700" }}
+        cursor="grab"
+        userSelect="none"
+        touchAction="none"
+        justify="space-between"
+        pointerEvents="auto"
+        borderTopWidth={1}
+        onPointerDown={(e) => {
+          onBringToFront(overlay.id);
+          dragHandlers.onPointerDown(e);
+        }}
+        onPointerMove={dragHandlers.onPointerMove}
+        onPointerUp={dragHandlers.onPointerUp}
+        onPointerCancel={dragHandlers.onPointerUp}
+      >
+        <IconButton
+          aria-label="閉じる"
+          variant="ghost"
+          size="2xs"
+          onClick={() => onRemove(overlay.id)}
+        >
+          <LuX />
+        </IconButton>
+        <HStack gap={1}>
+          <Text fontSize="xs" color={{ base: "gray.500", _dark: "gray.400" }}>
+            画像オーバーレイ
+          </Text>
+          <LuGripHorizontal />
+        </HStack>
+      </HStack>
+
+      {/* リサイズゾーン（4隅・透明） */}
+      {resizeCorners.map((zone, i) => (
         <Box
+          key={i}
           position="absolute"
-          right={0}
-          bottom={0}
-          w="16px"
-          h="16px"
-          cursor="nwse-resize"
+          top={zone.top}
+          bottom={zone.bottom}
+          left={zone.left}
+          right={zone.right}
+          w="12px"
+          h="12px"
+          cursor={zone.cursor}
           pointerEvents="auto"
-          borderRight="2px solid"
-          borderBottom="2px solid"
-          borderColor={{ base: "gray.400", _dark: "gray.500" }}
           touchAction="none"
-          onPointerDown={onResizePointerDown}
+          onPointerDown={(e) => onResizePointerDown(zone.sideH, zone.sideV, e)}
           onPointerMove={onResizePointerMove}
           onPointerUp={onResizePointerUp}
           onPointerCancel={onResizePointerUp}
         />
-      )}
+      ))}
     </Box>
   );
 }
