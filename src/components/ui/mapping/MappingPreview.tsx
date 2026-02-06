@@ -27,24 +27,24 @@ export default function MappingPreview({
 
   // result の各文字を表示要素に変換
   const renderChars = useMemo(() => {
-    const chars: React.ReactNode[] = [];
-    let i = 0;
+    const isCaseSensitive = activePreset?.caseSensitive;
 
-    while (i < result.length) {
-      const char = result[i];
-      const entry = outputToEntry.get(char);
+    return result.split("").map((char, i) => {
+      const upperChar = char.toUpperCase();
+      // caseSensitive: true → 大文字でマッチ、false → 入力文字 → 大文字の順でマッチ
+      const entry = isCaseSensitive
+        ? outputToEntry.get(upperChar)
+        : (outputToEntry.get(char) || outputToEntry.get(upperChar));
 
       if (char === " ") {
-        // スペースは空白として表示
-        chars.push(
-          <Box key={i} w="1em" display="inline-block" />
-        );
-      } else if (entry?.imageUrl) {
-        // 画像ベースのエントリ
+        return <Box key={i} w="1em" display="inline-block" />;
+      }
+
+      if (entry?.imageUrl) {
         const imageSrc = activePreset
           ? `/mapping-preset/${activePreset.id}/${entry.imageUrl}`
           : entry.imageUrl;
-        chars.push(
+        return (
           <Image
             key={i}
             src={imageSrc}
@@ -54,40 +54,32 @@ export default function MappingPreview({
             display="inline-block"
           />
         );
-      } else if (entry && activeFontFamily) {
-        // フォントベースのエントリ
-        chars.push(
+      }
+
+      if (entry && activeFontFamily) {
+        const displayChar = isCaseSensitive ? entry.display : char;
+        return (
           <Text
             key={i}
             as="span"
-            style={{
-              fontFamily: activeFontFamily,
-              fontSize: "2rem",
-            }}
+            style={{ fontFamily: activeFontFamily, fontSize: "2rem" }}
           >
-            {entry.display}
-          </Text>
-        );
-      } else {
-        // マッピングにない文字はそのまま表示
-        chars.push(
-          <Text
-            key={i}
-            as="span"
-            style={{
-              fontFamily: activeFontFamily || undefined,
-              fontSize: "2rem",
-            }}
-          >
-            {char}
+            {displayChar}
           </Text>
         );
       }
 
-      i++;
-    }
-
-    return chars;
+      // マッピングにない文字はそのまま表示
+      return (
+        <Text
+          key={i}
+          as="span"
+          style={{ fontFamily: activeFontFamily ?? undefined, fontSize: "2rem" }}
+        >
+          {char}
+        </Text>
+      );
+    });
   }, [result, outputToEntry, activePreset, activeFontFamily]);
 
   return (

@@ -12,7 +12,7 @@ export default function LeftSidebar() {
   const [isOpen, setIsOpen] = useState(true);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const { colorMode, toggleColorMode } = useColorMode();
-  const label = colorMode === "dark" ? "ダークモード" : "ライトモード";
+  const label = colorMode === "dark" ? "ライトモード" : "ダークモード";
 
   return (
     <VStack

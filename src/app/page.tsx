@@ -134,7 +134,7 @@ function HomeContent() {
       <Center pb={10}>
         <Heading>文字列変換</Heading>
       </Center>
-      <Container w={"60vw"}>
+      <Container w={{ base: "95vw", md: "80vw", lg: "60vw" }}>
         <Box pb={2}>
           <ReplaceToolbar text={target} onReplace={handleChange} />
         </Box>
@@ -152,7 +152,7 @@ function HomeContent() {
         <Box pt={6}>
           <Center>
             <ClientOnly>
-              <SimpleGrid w={"60vw"} columns={2} columnGap={10} rowGap={10}>
+              <SimpleGrid w="100%" columns={{ base: 1, md: 2 }} columnGap={10} rowGap={10}>
                 {SOLVER_COMPONENTS.filter(({ id }) => visibleSet.has(id)).map(
                   ({ id, component: Comp }) => (
                     <Comp key={id} target={target} />

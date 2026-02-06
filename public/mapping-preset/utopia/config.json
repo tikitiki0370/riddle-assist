@@ -4,6 +4,7 @@
   "type": "image",
   "description": "ユートピア文字",
   "thumbnail": "thumbnail.png",
+  "caseSensitive": true,
   "mappings": [
     { "display": "A", "imageUrl": "images/A.png", "output": "A" },
     { "display": "B", "imageUrl": "images/B.png", "output": "B" },

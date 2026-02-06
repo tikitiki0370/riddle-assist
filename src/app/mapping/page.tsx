@@ -12,11 +12,13 @@ import {
   InputGroup,
   SegmentGroup,
   SimpleGrid,
+  Spacer,
   Spinner,
   VStack,
 } from "@chakra-ui/react";
 import { Suspense, useState } from "react";
 import { LuCheck, LuCopy, LuDelete, LuSpace, LuTrash2 } from "react-icons/lu";
+import { CaseMode } from "@/hooks/useResultInput";
 import CreateMappingModal from "@/components/ui/mapping/CreateMappingModal";
 import MappingCard from "@/components/ui/mapping/MappingCard";
 import MappingPreview from "@/components/ui/mapping/MappingPreview";
@@ -56,6 +58,8 @@ function MappingPageContent() {
     handleSpace,
     handleBackspace,
     handleClear,
+    caseMode,
+    setCaseMode,
   } = useResultInput();
 
   return (
@@ -66,28 +70,30 @@ function MappingPageContent() {
       <Container w={"60vw"}>
         <VStack gap={6} align="stretch">
           {/* Preset Cards */}
-          <SimpleGrid columns={4} gap={4}>
-            {loadingPresets ? (
-              <Center><Spinner size="sm" /></Center>
-            ) : (
-              presets.map((preset) => (
-                <MappingCard
-                  key={preset.id}
-                  preset={preset}
-                  isActive={activePresetId === preset.id}
-                  onClick={() => handlePresetClick(preset.id)}
-                />
-              ))
-            )}
+          <Box overflowX="auto" overflowY="hidden" p={1}>
+            <HStack gap={4} minW="max-content">
+              {loadingPresets ? (
+                <Center><Spinner size="sm" /></Center>
+              ) : (
+                presets.map((preset) => (
+                  <MappingCard
+                    key={preset.id}
+                    preset={preset}
+                    isActive={activePresetId === preset.id}
+                    onClick={() => handlePresetClick(preset.id)}
+                  />
+                ))
+              )}
 
-            {/* Create New Card */}
-            <MappingCard
-              title={customFontName || "新規作成"}
-              subtitle={customFontName ? "カスタムフォント" : "フォントファイルを利用できます"}
-              isActive={!!customFontName && !activePreset}
-              onClick={() => setIsModalOpen(true)}
-            />
-          </SimpleGrid>
+              {/* Create New Card */}
+              <MappingCard
+                title={customFontName || "新規作成"}
+                subtitle={customFontName ? "カスタムフォント" : "フォントファイルを利用できます"}
+                isActive={!!customFontName && !activePreset}
+                onClick={() => setIsModalOpen(true)}
+              />
+            </HStack>
+          </Box>
 
           {/* Create New Modal */}
           <CreateMappingModal
@@ -145,30 +151,36 @@ function MappingPageContent() {
 
           {/* Character Grid */}
           <SimpleGrid columns={7} gap={2}>
-            {mappings.map((entry, index) => (
-              <Button
-                key={`${entry.display}-${index}`}
-                size="lg"
-                variant="outline"
-                onClick={() => handleCharClick(entry)}
-                style={{
-                  fontFamily: (!entry.imageUrl && activeFontFamily) ? activeFontFamily : undefined,
-                  fontSize: entry.imageUrl ? undefined : "1.5rem",
-                }}
-                p={entry.imageUrl ? 1 : undefined}
-              >
-                {entry.imageUrl ? (
-                  <Image
-                    src={activePreset ? `/mapping-preset/${activePreset.id}/${entry.imageUrl}` : entry.imageUrl}
-                    alt={entry.output}
-                    height="32px"
-                    objectFit="contain"
-                  />
-                ) : (
-                  entry.display
-                )}
-              </Button>
-            ))}
+            {mappings.map((entry, index) => {
+              const displayText = activePreset?.caseSensitive
+                ? entry.display
+                : caseMode === "lower" ? entry.display.toLowerCase() : entry.display.toUpperCase();
+
+              return (
+                <Button
+                  key={`${entry.display}-${index}`}
+                  size="lg"
+                  variant="outline"
+                  onClick={() => handleCharClick(entry)}
+                  style={{
+                    fontFamily: (!entry.imageUrl && activeFontFamily) ? activeFontFamily : undefined,
+                    fontSize: entry.imageUrl ? undefined : "1.5rem",
+                  }}
+                  p={entry.imageUrl ? 1 : undefined}
+                >
+                  {entry.imageUrl ? (
+                    <Image
+                      src={activePreset ? `/mapping-preset/${activePreset.id}/${entry.imageUrl}` : entry.imageUrl}
+                      alt={entry.output}
+                      height="32px"
+                      objectFit="contain"
+                    />
+                  ) : (
+                    displayText
+                  )}
+                </Button>
+              );
+            })}
           </SimpleGrid>
 
           {/* Control Buttons */}
@@ -182,6 +194,21 @@ function MappingPageContent() {
             <Button variant="outline" colorPalette="red" onClick={handleClear}>
               <LuTrash2 /> Clear
             </Button>
+            <Spacer />
+            <SegmentGroup.Root
+              value={caseMode}
+              onValueChange={(e) => setCaseMode(e.value as CaseMode)}
+            >
+              <SegmentGroup.Indicator />
+              <SegmentGroup.Item value="lower">
+                <SegmentGroup.ItemText>小文字</SegmentGroup.ItemText>
+                <SegmentGroup.ItemHiddenInput />
+              </SegmentGroup.Item>
+              <SegmentGroup.Item value="upper">
+                <SegmentGroup.ItemText>大文字</SegmentGroup.ItemText>
+                <SegmentGroup.ItemHiddenInput />
+              </SegmentGroup.Item>
+            </SegmentGroup.Root>
           </HStack>
 
         </VStack>

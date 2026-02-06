@@ -13,5 +13,6 @@ export interface PresetConfig {
   description?: string;
   thumbnail?: string;    // サムネイル画像ファイル名
   fontFile?: string;     // type="font" の場合
+  caseSensitive?: boolean; // true=表示は大文字固定, false/undefined=caseModeに従う
   mappings: MappingEntry[];
 }

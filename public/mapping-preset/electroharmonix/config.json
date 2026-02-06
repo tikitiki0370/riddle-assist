@@ -5,6 +5,7 @@
   "description": "カタカナに見えるアルファベット",
   "thumbnail": "thumbnail.png",
   "fontFile": "Electroharmonix.otf",
+  "caseSensitive": true,
   "mappings": [
     { "display": "A", "output": "A" },
     { "display": "B", "output": "B" },

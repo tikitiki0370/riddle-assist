@@ -1,12 +1,18 @@
 import { useCallback, useState } from "react";
 import { MappingEntry } from "@/types/mapping";
 
+export type CaseMode = "lower" | "upper";
+
 export function useResultInput() {
   const [result, setResult] = useState("");
+  const [caseMode, setCaseModeState] = useState<CaseMode>("upper");
 
   const handleCharClick = useCallback((entry: MappingEntry) => {
-    setResult((prev) => prev + entry.output);
-  }, []);
+    const char = caseMode === "lower"
+      ? entry.output.toLowerCase()
+      : entry.output.toUpperCase();
+    setResult((prev) => prev + char);
+  }, [caseMode]);
 
   const handleSpace = useCallback(() => {
     setResult((prev) => prev + " ");
@@ -20,6 +26,13 @@ export function useResultInput() {
     setResult("");
   }, []);
 
+  const setCaseMode = useCallback((mode: CaseMode) => {
+    setCaseModeState(mode);
+    setResult((prev) =>
+      mode === "lower" ? prev.toLowerCase() : prev.toUpperCase()
+    );
+  }, []);
+
   return {
     result,
     setResult,
@@ -27,5 +40,7 @@ export function useResultInput() {
     handleSpace,
     handleBackspace,
     handleClear,
+    caseMode,
+    setCaseMode,
   };
 }

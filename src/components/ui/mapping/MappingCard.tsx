@@ -1,5 +1,5 @@
 "use client";
-import { Card, Image, Text, VStack } from "@chakra-ui/react";
+import { Card, Center, Image, Text } from "@chakra-ui/react";
 import { LuType, LuImage, LuPlus } from "react-icons/lu";
 import { ReactNode } from "react";
 import { PresetConfig } from "@/types/mapping";
@@ -44,27 +44,33 @@ export default function MappingCard({
       onClick={onClick}
       boxShadow={isActive ? "0 0 0 2px var(--chakra-colors-blue-500)" : undefined}
       _hover={isActive ? undefined : { boxShadow: "0 0 0 1px var(--chakra-colors-gray-400)" }}
+      w="140px"
+      flexShrink={0}
     >
-      <Card.Body>
-        <VStack gap={2}>
+      <Card.Header p={3} pb={0}>
+        <Center h="40px">
           {thumbnailUrl ? (
             <Image
               src={thumbnailUrl}
               alt={displayTitle}
-              height="32px"
+              h="32px"
               objectFit="contain"
             />
           ) : (
             displayIcon
           )}
-          <Text fontWeight="medium" textAlign="center">{displayTitle}</Text>
-          {displaySubtitle && (
-            <Text fontSize="xs" color="gray.500" textAlign="center">
-              {displaySubtitle}
-            </Text>
-          )}
-        </VStack>
+        </Center>
+      </Card.Header>
+      <Card.Body p={3} pt={2}>
+        <Text fontWeight="medium" textAlign="center" lineClamp={2} fontSize="sm">
+          {displayTitle}
+        </Text>
       </Card.Body>
+      <Card.Footer p={3} pt={0} h="40px">
+        <Text fontSize="xs" color="gray.500" textAlign="center" lineClamp={2} w="full">
+          {displaySubtitle || "\u00A0"}
+        </Text>
+      </Card.Footer>
     </Card.Root>
   );
 }
