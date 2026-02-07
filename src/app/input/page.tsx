@@ -40,7 +40,7 @@ export default function InputPage() {
             position="sticky"
             top={0}
             zIndex={10}
-            bg={{ base: "white", _dark: "gray.900" }}
+            bg="bg"
             py={2}
             mx={-4}
             px={4}
