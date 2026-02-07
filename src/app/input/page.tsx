@@ -37,6 +37,7 @@ export default function InputPage() {
         <VStack gap={6} align="stretch">
           {/* Result - Sticky */}
           <Box
+            data-tutorial="input-result"
             position="sticky"
             top={0}
             zIndex={10}
@@ -78,7 +79,7 @@ export default function InputPage() {
           </Box>
 
           {/* 五十音表 */}
-          <VStack gap={1}>
+          <VStack data-tutorial="input-gojuon" gap={1}>
             <Text fontSize="xs" color="gray.400">50音</Text>
             <GojuonInput onInput={handleInput} />
           </VStack>

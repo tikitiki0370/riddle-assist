@@ -3,16 +3,25 @@ import { Button, ClientOnly, HStack, IconButton, Skeleton, VStack } from "@chakr
 import { ColorModeIcon, useColorMode } from "@/components/ui/color-mode";
 import { Tooltip } from "@/components/ui/tooltip";
 import { useState } from "react";
-import { LuGrid3X3, LuImage, LuLanguages, LuPanelLeftClose, LuPanelLeftOpen, LuSettings, LuTable } from "react-icons/lu";
+import { LuCircleHelp, LuGrid3X3, LuImage, LuLanguages, LuPanelLeftClose, LuPanelLeftOpen, LuSettings, LuTable } from "react-icons/lu";
 import SettingsDrawer from "@/components/ui/SettingsDrawer";
 import { AiOutlineFontSize } from "react-icons/ai";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { TUTORIAL_OPEN_EVENT } from "@/hooks/useTutorial";
 
 export default function LeftSidebar() {
   const [isOpen, setIsOpen] = useState(true);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const { colorMode, toggleColorMode } = useColorMode();
   const label = colorMode === "dark" ? "ライトモード" : "ダークモード";
+  const pathname = usePathname();
+
+  const handleHelp = () => {
+    window.dispatchEvent(
+      new CustomEvent(TUTORIAL_OPEN_EVENT, { detail: pathname }),
+    );
+  };
 
   return (
     <VStack
@@ -211,6 +220,30 @@ export default function LeftSidebar() {
       </VStack>
 
       <VStack align="stretch" mt="auto" gap={2} px={isOpen ? 0 : undefined}>
+        {isOpen ? (
+          <Button
+            variant="ghost"
+            justifyContent="flex-start"
+            w="100%"
+            onClick={handleHelp}
+          >
+            <LuCircleHelp /> ヘルプ
+          </Button>
+        ) : (
+          <HStack justify="center">
+            <Tooltip content="ヘルプ" positioning={{ placement: "right" }}>
+              <IconButton
+                aria-label="ヘルプ"
+                variant="ghost"
+                size="sm"
+                onClick={handleHelp}
+              >
+                <LuCircleHelp />
+              </IconButton>
+            </Tooltip>
+          </HStack>
+        )}
+
         {isOpen ? (
           <Button
             variant="ghost"

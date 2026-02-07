@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import LeftSidebar from "@/components/ui/LeftSidebar";
 import FloatingPanelManager from "@/components/ui/floatingpanel/FloatingPanelManager";
+import TutorialOverlay from "@/components/ui/tutorial/TutorialOverlay";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -44,6 +45,7 @@ export default function RootLayout({
             <main style={{ flex: 1 }}>{children}</main>
           </div>
           <FloatingPanelManager />
+          <TutorialOverlay />
         </Provider>
       </body>
     </html>

@@ -6,12 +6,14 @@ import CheatSheetTable from "./CheatSheetTable";
 type Props = {
 	label: string;
 	sheets: CheatSheetData[];
+	dataTutorial?: string;
 };
 
-export default function CheatSheetGroup({ label, sheets }: Props) {
+export default function CheatSheetGroup({ label, sheets, dataTutorial }: Props) {
 	return (
 		<Collapsible.Root defaultOpen w="100%">
 			<Collapsible.Trigger
+				data-tutorial={dataTutorial}
 				paddingY="1"
 				display="flex"
 				gap="2"

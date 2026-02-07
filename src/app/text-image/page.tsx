@@ -65,6 +65,7 @@ export default function TextImagePage() {
         <VStack gap={6} align="stretch">
           {/* 入力エリア */}
           <Textarea
+            data-tutorial="textimage-input"
             value={rawInput}
             onChange={(e) => setRawInput(e.target.value)}
             placeholder="0と1を入力 (改行で行を区切る)"
@@ -73,7 +74,7 @@ export default function TextImagePage() {
           />
 
           {/* コントロール */}
-          <HStack gap={6} flexWrap="wrap" align="center">
+          <HStack data-tutorial="textimage-controls" gap={6} flexWrap="wrap" align="center">
             {/* 列数スライダー */}
             <HStack gap={2}>
               <HStack gap={2} opacity={hasNewlines ? 0.4 : 1}>

@@ -11,12 +11,13 @@ export default function CheatSheetPage() {
 				<Heading>早見表</Heading>
 			</Center>
 			<Container w={"70vw"}>
-				<VStack>
-					{groups.map((group) => (
+				<VStack data-tutorial="sheet-groups">
+					{groups.map((group, index) => (
 						<CheatSheetGroup
 							key={group.label}
 							label={group.label}
 							sheets={group.sheets}
+							dataTutorial={index === 0 ? "sheet-table-header" : undefined}
 						/>
 					))}
 				</VStack>

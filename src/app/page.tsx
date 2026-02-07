@@ -163,16 +163,17 @@ function HomeContent() {
           <ReplaceToolbar text={target} onReplace={handleChange} />
         </Box>
         <Textarea
+          data-tutorial="home-textarea"
           placeholder="Enter text"
           value={target}
           onChange={(e) => handleChange(e.target.value)}
           minH="200px"
         />
         <HStack pt={4} justify="space-between">
-          <Button variant="outline" size="sm" onClick={() => setDialogOpen(true)}>
+          <Button data-tutorial="home-add-tool" variant="outline" size="sm" onClick={() => setDialogOpen(true)}>
             <LuPlus /> ツールを追加
           </Button>
-          <HStack>
+          <HStack data-tutorial="home-separator">
             <Text fontSize="sm">セパレータ:</Text>
             <Input
               size="sm"

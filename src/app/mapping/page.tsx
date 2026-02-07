@@ -70,7 +70,7 @@ function MappingPageContent() {
       <Container w="60vw">
         <VStack gap={6} align="stretch">
           {/* Preset Cards */}
-          <Box overflowX="auto" overflowY="hidden" p={1}>
+          <Box data-tutorial="mapping-presets" overflowX="auto" overflowY="hidden" p={1}>
             <HStack gap={4} minW="max-content">
               {loadingPresets ? (
                 <Center><Spinner size="sm" /></Center>
@@ -103,7 +103,7 @@ function MappingPageContent() {
           />
 
           {/* Result */}
-          <Clipboard.Root value={result}>
+          <Clipboard.Root data-tutorial="mapping-result" value={result}>
             <InputGroup
               endElement={
                 <Clipboard.Trigger asChild>
@@ -150,7 +150,7 @@ function MappingPageContent() {
           )}
 
           {/* Character Grid */}
-          <SimpleGrid minChildWidth="60px" gap={2}>
+          <SimpleGrid data-tutorial="mapping-grid" minChildWidth="60px" gap={2}>
             {mappings.map((entry, index) => {
               const displayText = activePreset?.caseSensitive
                 ? entry.display
