@@ -8,13 +8,12 @@ interface GojuonInputProps {
 
 export default function GojuonInput({ onInput }: GojuonInputProps) {
   return (
-    <Grid templateColumns="repeat(11, 40px)" gap={1} justifyContent="center">
+    <Grid templateColumns="repeat(11, 1fr)" gap={1} maxW="480px" w="100%">
       {GOJUON_GRID.flat().map((char, index) =>
         char !== null ? (
           <Box
             key={`${char}-${index}`}
-            w="40px"
-            h="40px"
+            aspectRatio={1}
             borderWidth={1}
             borderRadius="md"
             cursor="pointer"
@@ -30,7 +29,7 @@ export default function GojuonInput({ onInput }: GojuonInputProps) {
             </Center>
           </Box>
         ) : (
-          <Box key={`empty-${index}`} w="40px" h="40px" />
+          <Box key={`empty-${index}`} aspectRatio={1} />
         )
       )}
     </Grid>
