@@ -61,26 +61,26 @@ const TUTORIALS: Record<string, PageTutorial> = {
       },
     ],
   },
-  "/mapping": {
-    pageId: "mapping",
+  "/translate": {
+    pageId: "translate",
     version: 1,
     steps: [
       {
-        target: "mapping-presets",
+        target: "translate-presets",
         placement: "bottom",
-        title: "マッピングの選択",
+        title: "翻訳プリセットの選択",
         description:
           "カードをクリックしてプリセットを選択します。「新規作成」から独自のフォントファイルも読み込めます。",
       },
       {
-        target: "mapping-result",
+        target: "translate-result",
         placement: "bottom",
         title: "入力結果",
         description:
           "入力した文字がここに表示されます。コピーボタンでクリップボードにコピーできます。",
       },
       {
-        target: "mapping-grid",
+        target: "translate-grid",
         placement: "top",
         title: "文字の入力",
         description: "ボタンをクリックして文字を入力します。",

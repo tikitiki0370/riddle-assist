@@ -1,5 +1,5 @@
-// マッピング1件（ボタン1つ分）
-export interface MappingEntry {
+// 翻訳1件（ボタン1つ分）
+export interface TranslateEntry {
   display: string;       // 表示文字（フォント適用時）
   imageUrl?: string;     // 画像URL（type="image" の場合）
   output: string;        // 出力文字
@@ -14,5 +14,5 @@ export interface PresetConfig {
   thumbnail?: string;    // サムネイル画像ファイル名
   fontFile?: string;     // type="font" の場合
   caseSensitive?: boolean; // true=表示は大文字固定, false/undefined=caseModeに従う
-  mappings: MappingEntry[];
+  entries: TranslateEntry[];
 }

@@ -1,24 +1,24 @@
 import { useCallback, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { PresetConfig, MappingEntry } from "@/types/mapping";
+import { PresetConfig, TranslateEntry } from "@/types/translate";
 import {
   loadAllPresetConfigs,
   loadPresetConfig,
   loadPresetFont,
-  DEFAULT_MAPPINGS,
-} from "@/lib/mapping";
+  DEFAULT_ENTRIES,
+} from "@/lib/translate";
 
-export function useMappingPresets() {
+export function useTranslatePresets() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const mappingParam = searchParams.get("mapping");
+  const presetParam = searchParams.get("preset");
 
   // プリセット一覧
   const [presets, setPresets] = useState<PresetConfig[]>([]);
   const [loadingPresets, setLoadingPresets] = useState(true);
 
   // 選択状態
-  const [activePresetId, setActivePresetId] = useState<string | null>(mappingParam);
+  const [activePresetId, setActivePresetId] = useState<string | null>(presetParam);
   const [activePreset, setActivePreset] = useState<PresetConfig | null>(null);
   const [fontFamily, setFontFamily] = useState<string | null>(null);
 
@@ -41,7 +41,7 @@ export function useMappingPresets() {
   // URLパラメータが変わったらプリセットを読み込み
   useEffect(() => {
     async function loadActivePreset() {
-      if (!mappingParam) {
+      if (!presetParam) {
         setActivePresetId(null);
         setActivePreset(null);
         setFontFamily(null);
@@ -49,12 +49,12 @@ export function useMappingPresets() {
       }
 
       try {
-        const config = await loadPresetConfig(mappingParam);
-        setActivePresetId(mappingParam);
+        const config = await loadPresetConfig(presetParam);
+        setActivePresetId(presetParam);
         setActivePreset(config);
 
         if (config.type === "font" && config.fontFile) {
-          const family = await loadPresetFont(mappingParam, config.fontFile);
+          const family = await loadPresetFont(presetParam, config.fontFile);
           setFontFamily(family);
         }
 
@@ -62,17 +62,17 @@ export function useMappingPresets() {
         setCustomFontName(null);
         setCustomFontFamily(null);
       } catch (e) {
-        console.error(`Failed to load preset: ${mappingParam}`, e);
+        console.error(`Failed to load preset: ${presetParam}`, e);
       }
     }
     loadActivePreset();
-  }, [mappingParam]);
+  }, [presetParam]);
 
   // プリセットカードクリック
   const handlePresetClick = useCallback(
     (presetId: string) => {
       const params = new URLSearchParams(searchParams.toString());
-      params.set("mapping", presetId);
+      params.set("preset", presetId);
       router.replace(`?${params.toString()}`);
     },
     [searchParams, router]
@@ -83,10 +83,10 @@ export function useMappingPresets() {
     (name: string, family: string) => {
       setCustomFontName(name);
       setCustomFontFamily(family);
-      // URLからmappingパラメータを削除
+      // URLからpresetパラメータを削除
       const params = new URLSearchParams(searchParams.toString());
-      params.delete("mapping");
-      router.replace(params.toString() ? `?${params.toString()}` : "/mapping");
+      params.delete("preset");
+      router.replace(params.toString() ? `?${params.toString()}` : "/translate");
       // プリセット選択をクリア
       setActivePresetId(null);
       setActivePreset(null);
@@ -95,10 +95,10 @@ export function useMappingPresets() {
     [searchParams, router]
   );
 
-  // 表示するマッピング
-  const mappings: MappingEntry[] = activePreset
-    ? activePreset.mappings
-    : DEFAULT_MAPPINGS[mode] ?? [];
+  // 表示するエントリ
+  const entries: TranslateEntry[] = activePreset
+    ? activePreset.entries
+    : DEFAULT_ENTRIES[mode] ?? [];
 
   // フォントファミリー（プリセットまたはカスタム）
   const activeFontFamily = activePreset ? fontFamily : customFontFamily;
@@ -113,8 +113,8 @@ export function useMappingPresets() {
     // アクティブなプリセット
     activePresetId,
     activePreset,
-    // マッピングとフォント
-    mappings,
+    // エントリとフォント
+    entries,
     activeFontFamily,
     // モード
     mode,

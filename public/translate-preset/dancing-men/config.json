@@ -1,12 +1,11 @@
 {
-  "id": "electroharmonix",
-  "name": "Electroharmonix",
+  "id": "dancing-men",
+  "name": "踊る人形",
   "type": "font",
-  "description": "カタカナに見えるアルファベット",
+  "description": "シャーロック・ホームズの暗号",
   "thumbnail": "thumbnail.png",
-  "fontFile": "Electroharmonix.otf",
-  "caseSensitive": true,
-  "mappings": [
+  "fontFile": "dancing-men.ttf",
+  "entries": [
     { "display": "A", "output": "A" },
     { "display": "B", "output": "B" },
     { "display": "C", "output": "C" },
@@ -32,16 +31,6 @@
     { "display": "W", "output": "W" },
     { "display": "X", "output": "X" },
     { "display": "Y", "output": "Y" },
-    { "display": "Z", "output": "Z" },
-    { "display": "0", "output": "0" },
-    { "display": "1", "output": "1" },
-    { "display": "2", "output": "2" },
-    { "display": "3", "output": "3" },
-    { "display": "4", "output": "4" },
-    { "display": "5", "output": "5" },
-    { "display": "6", "output": "6" },
-    { "display": "7", "output": "7" },
-    { "display": "8", "output": "8" },
-    { "display": "9", "output": "9" }
+    { "display": "Z", "output": "Z" }
   ]
 }

@@ -115,20 +115,20 @@ export default function LeftSidebar() {
             justifyContent="flex-start"
             w="100%"
           >
-            <Link href="/mapping">
-              <LuLanguages /> Text Mapping
+            <Link href="/translate">
+              <LuLanguages /> Translate
             </Link>
           </Button>
         ) : (
           <HStack justify="center">
-            <Tooltip content="Text Mapping" positioning={{ placement: "right" }}>
+            <Tooltip content="Translate" positioning={{ placement: "right" }}>
               <IconButton
                 asChild
-                aria-label="Text Mapping"
+                aria-label="Translate"
                 variant="ghost"
                 size="sm"
               >
-                <Link href="/mapping">
+                <Link href="/translate">
                   <LuLanguages />
                 </Link>
               </IconButton>

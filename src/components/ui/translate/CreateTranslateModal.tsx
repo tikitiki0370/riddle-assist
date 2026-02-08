@@ -10,19 +10,19 @@ import {
 import { useCallback, useRef, useState } from "react";
 import { LuImage, LuUpload, LuX } from "react-icons/lu";
 
-interface CreateMappingModalProps {
+interface CreateTranslateModalProps {
   open: boolean;
   onClose: () => void;
   onFontLoaded: (fontName: string, fontFamily: string) => void;
 }
 
-const FONT_FAMILY = "custom-mapping-font";
+const FONT_FAMILY = "custom-translate-font";
 
-export default function CreateMappingModal({
+export default function CreateTranslateModal({
   open,
   onClose,
   onFontLoaded,
-}: CreateMappingModalProps) {
+}: CreateTranslateModalProps) {
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -82,7 +82,7 @@ export default function CreateMappingModal({
         <Dialog.Positioner>
           <Dialog.Content>
             <Dialog.Header>
-              <Dialog.Title>新規マッピング作成</Dialog.Title>
+              <Dialog.Title>新規翻訳作成</Dialog.Title>
               <Dialog.CloseTrigger asChild>
                 <Button variant="ghost" size="sm" position="absolute" right={2} top={2}>
                   <LuX />

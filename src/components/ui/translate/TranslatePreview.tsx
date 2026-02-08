@@ -1,29 +1,29 @@
 "use client";
 import { Box, Flex, Image, Text } from "@chakra-ui/react";
 import { useMemo } from "react";
-import { MappingEntry, PresetConfig } from "@/types/mapping";
+import { TranslateEntry, PresetConfig } from "@/types/translate";
 
-interface MappingPreviewProps {
+interface TranslatePreviewProps {
   result: string;
-  mappings: MappingEntry[];
+  entries: TranslateEntry[];
   activePreset: PresetConfig | null;
   activeFontFamily: string | null;
 }
 
-export default function MappingPreview({
+export default function TranslatePreview({
   result,
-  mappings,
+  entries,
   activePreset,
   activeFontFamily,
-}: MappingPreviewProps) {
-  // output -> MappingEntry のマップを作成
+}: TranslatePreviewProps) {
+  // output -> TranslateEntry のマップを作成
   const outputToEntry = useMemo(() => {
-    const map = new Map<string, MappingEntry>();
-    for (const entry of mappings) {
+    const map = new Map<string, TranslateEntry>();
+    for (const entry of entries) {
       map.set(entry.output, entry);
     }
     return map;
-  }, [mappings]);
+  }, [entries]);
 
   // result の各文字を表示要素に変換
   const renderChars = useMemo(() => {
@@ -42,7 +42,7 @@ export default function MappingPreview({
 
       if (entry?.imageUrl) {
         const imageSrc = activePreset
-          ? `/mapping-preset/${activePreset.id}/${entry.imageUrl}`
+          ? `/translate-preset/${activePreset.id}/${entry.imageUrl}`
           : entry.imageUrl;
         return (
           <Image
@@ -69,7 +69,7 @@ export default function MappingPreview({
         );
       }
 
-      // マッピングにない文字はそのまま表示
+      // 対応するエントリがない文字はそのまま表示
       return (
         <Text
           key={i}

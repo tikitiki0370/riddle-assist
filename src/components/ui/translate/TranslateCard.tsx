@@ -2,9 +2,9 @@
 import { Card, Center, Image, Text } from "@chakra-ui/react";
 import { LuType, LuImage, LuPlus } from "react-icons/lu";
 import { ReactNode } from "react";
-import { PresetConfig } from "@/types/mapping";
+import { PresetConfig } from "@/types/translate";
 
-interface MappingCardProps {
+interface TranslateCardProps {
   preset?: PresetConfig;
   title?: string;
   icon?: ReactNode;
@@ -13,21 +13,21 @@ interface MappingCardProps {
   isActive?: boolean;
 }
 
-export default function MappingCard({
+export default function TranslateCard({
   preset,
   title,
   icon,
   subtitle,
   onClick,
   isActive,
-}: MappingCardProps) {
+}: TranslateCardProps) {
   // プリセットがある場合はその情報を使用
   const displayTitle = preset?.name ?? title ?? "新規作成";
   const displaySubtitle = preset?.description ?? subtitle;
 
   // サムネイルURL
   const thumbnailUrl = preset?.thumbnail
-    ? `/mapping-preset/${preset.id}/${preset.thumbnail}`
+    ? `/translate-preset/${preset.id}/${preset.thumbnail}`
     : null;
 
   // タイプに応じたアイコン（サムネイルがない場合）

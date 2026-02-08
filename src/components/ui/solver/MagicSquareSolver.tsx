@@ -12,7 +12,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { LuPlay, LuTrash2 } from "react-icons/lu";
 import type { MagicSquareResult } from "@/lib/solverEngine/puzzle/magicSquare";
 
@@ -23,6 +23,7 @@ export default function MagicSquareSolver() {
   const [patternIndex, setPatternIndex] = useState(0);
   const [isSolving, setIsSolving] = useState(false);
   const workerRef = useRef<Worker | null>(null);
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const terminateWorker = () => {
     if (workerRef.current) {
@@ -50,6 +51,30 @@ export default function MagicSquareSolver() {
       return next;
     });
   };
+
+  const handleKeyDown = useCallback(
+    (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+      const row = Math.floor(index / n);
+      const col = index % n;
+      let target = -1;
+
+      if (e.key === "ArrowLeft") {
+        if (col > 0) target = row * n + (col - 1);
+      } else if (e.key === "ArrowRight") {
+        if (col < n - 1) target = row * n + (col + 1);
+      } else if (e.key === "ArrowUp") {
+        if (row > 0) target = (row - 1) * n + col;
+      } else if (e.key === "ArrowDown") {
+        if (row < n - 1) target = (row + 1) * n + col;
+      }
+
+      if (target !== -1) {
+        e.preventDefault();
+        inputRefs.current[target]?.focus();
+      }
+    },
+    [n],
+  );
 
   const handleSolve = () => {
     terminateWorker();
@@ -160,6 +185,7 @@ export default function MagicSquareSolver() {
                     </Center>
                   ) : (
                     <Input
+                      ref={(el) => { inputRefs.current[i] = el; }}
                       w="48px"
                       h="48px"
                       textAlign="center"
@@ -167,6 +193,7 @@ export default function MagicSquareSolver() {
                       p={0}
                       value={cells[i]}
                       onChange={(e) => handleCellChange(i, e.target.value)}
+                      onKeyDown={(e) => handleKeyDown(i, e)}
                       placeholder="·"
                       disabled={isSolving}
                     />

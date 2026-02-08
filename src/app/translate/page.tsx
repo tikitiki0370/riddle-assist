@@ -19,21 +19,21 @@ import {
 import { Suspense, useState } from "react";
 import { LuCheck, LuCopy, LuDelete, LuSpace, LuTrash2 } from "react-icons/lu";
 import { CaseMode } from "@/hooks/useResultInput";
-import CreateMappingModal from "@/components/ui/mapping/CreateMappingModal";
-import MappingCard from "@/components/ui/mapping/MappingCard";
-import MappingPreview from "@/components/ui/mapping/MappingPreview";
-import { useMappingPresets } from "@/hooks/useMappingPresets";
+import CreateTranslateModal from "@/components/ui/translate/CreateTranslateModal";
+import TranslateCard from "@/components/ui/translate/TranslateCard";
+import TranslatePreview from "@/components/ui/translate/TranslatePreview";
+import { useTranslatePresets } from "@/hooks/useTranslatePresets";
 import { useResultInput } from "@/hooks/useResultInput";
 
-export default function MappingPage() {
+export default function TranslatePage() {
   return (
     <Suspense fallback={<Center py={10}><Spinner /></Center>}>
-      <MappingPageContent />
+      <TranslatePageContent />
     </Suspense>
   );
 }
 
-function MappingPageContent() {
+function TranslatePageContent() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {
@@ -41,7 +41,7 @@ function MappingPageContent() {
     loadingPresets,
     activePresetId,
     activePreset,
-    mappings,
+    entries,
     activeFontFamily,
     mode,
     setMode,
@@ -49,7 +49,7 @@ function MappingPageContent() {
     customFontName,
     handlePresetClick,
     handleFontLoaded,
-  } = useMappingPresets();
+  } = useTranslatePresets();
 
   const {
     result,
@@ -65,18 +65,18 @@ function MappingPageContent() {
   return (
     <Box py={10}>
       <Center pb={10}>
-        <Heading>テキストマッピング</Heading>
+        <Heading>翻訳機</Heading>
       </Center>
       <Container w="60vw">
         <VStack gap={6} align="stretch">
           {/* Preset Cards */}
-          <Box data-tutorial="mapping-presets" overflowX="auto" overflowY="hidden" p={1}>
+          <Box data-tutorial="translate-presets" overflowX="auto" overflowY="hidden" p={1}>
             <HStack gap={4} minW="max-content">
               {loadingPresets ? (
                 <Center><Spinner size="sm" /></Center>
               ) : (
                 presets.map((preset) => (
-                  <MappingCard
+                  <TranslateCard
                     key={preset.id}
                     preset={preset}
                     isActive={activePresetId === preset.id}
@@ -86,7 +86,7 @@ function MappingPageContent() {
               )}
 
               {/* Create New Card */}
-              <MappingCard
+              <TranslateCard
                 title={customFontName || "新規作成"}
                 subtitle={customFontName ? "カスタムフォント" : "フォントファイルを利用できます"}
                 isActive={!!customFontName && !activePreset}
@@ -96,14 +96,14 @@ function MappingPageContent() {
           </Box>
 
           {/* Create New Modal */}
-          <CreateMappingModal
+          <CreateTranslateModal
             open={isModalOpen}
             onClose={() => setIsModalOpen(false)}
             onFontLoaded={handleFontLoaded}
           />
 
           {/* Result */}
-          <Clipboard.Root data-tutorial="mapping-result" value={result}>
+          <Clipboard.Root data-tutorial="translate-result" value={result}>
             <InputGroup
               endElement={
                 <Clipboard.Trigger asChild>
@@ -124,9 +124,9 @@ function MappingPageContent() {
           </Clipboard.Root>
 
           {/* Preview */}
-          <MappingPreview
+          <TranslatePreview
             result={result}
-            mappings={mappings}
+            entries={entries}
             activePreset={activePreset}
             activeFontFamily={activeFontFamily}
           />
@@ -150,8 +150,8 @@ function MappingPageContent() {
           )}
 
           {/* Character Grid */}
-          <SimpleGrid data-tutorial="mapping-grid" minChildWidth="60px" gap={2}>
-            {mappings.map((entry, index) => {
+          <SimpleGrid data-tutorial="translate-grid" minChildWidth="60px" gap={2}>
+            {entries.map((entry, index) => {
               const displayText = activePreset?.caseSensitive
                 ? entry.display
                 : caseMode === "lower" ? entry.display.toLowerCase() : entry.display.toUpperCase();
@@ -170,7 +170,7 @@ function MappingPageContent() {
                 >
                   {entry.imageUrl ? (
                     <Image
-                      src={activePreset ? `/mapping-preset/${activePreset.id}/${entry.imageUrl}` : entry.imageUrl}
+                      src={activePreset ? `/translate-preset/${activePreset.id}/${entry.imageUrl}` : entry.imageUrl}
                       alt={entry.output}
                       height="32px"
                       objectFit="contain"

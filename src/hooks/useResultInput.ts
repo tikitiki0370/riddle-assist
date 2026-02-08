@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { MappingEntry } from "@/types/mapping";
+import { TranslateEntry } from "@/types/translate";
 
 export type CaseMode = "lower" | "upper";
 
@@ -28,7 +28,7 @@ export function useResultInput() {
     router.replace(`?${params.toString()}`);
   }, [result, router]);
 
-  const handleCharClick = useCallback((entry: MappingEntry) => {
+  const handleCharClick = useCallback((entry: TranslateEntry) => {
     const char = caseMode === "lower"
       ? entry.output.toLowerCase()
       : entry.output.toUpperCase();
