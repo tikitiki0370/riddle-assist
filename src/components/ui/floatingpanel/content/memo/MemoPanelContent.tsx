@@ -12,6 +12,7 @@ import { PanelContentProps } from "../../types";
 
 export interface MemoContentState extends Record<string, unknown> {
   html: string;
+  slotNumber: number | null;
 }
 
 export default function MemoPanelContent({

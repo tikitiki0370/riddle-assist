@@ -127,6 +127,7 @@ export default function FloatingPanel({
 
   const ContentComponent = contentDef.ContentComponent;
   const ControlsComponent = contentDef.ControlsComponent;
+  const label = contentDef.getLabel?.(panel.contentState) ?? contentDef.label;
 
   return (
     <Box
@@ -169,7 +170,7 @@ export default function FloatingPanel({
         <HStack gap={1}>
           <LuGripHorizontal />
           <Text fontSize="xs" color={{ base: "gray.500", _dark: "gray.400" }}>
-            {contentDef.label}
+            {label}
           </Text>
         </HStack>
         <IconButton
@@ -241,7 +242,7 @@ export default function FloatingPanel({
         </IconButton>
         <HStack gap={1}>
           <Text fontSize="xs" color={{ base: "gray.500", _dark: "gray.400" }}>
-            {contentDef.label}
+            {label}
           </Text>
           <LuGripHorizontal />
         </HStack>

@@ -21,15 +21,21 @@ function loadPanels(): FloatingPanelState[] {
     if (!raw) return [];
     const panels: FloatingPanelState[] = JSON.parse(raw);
     // blob URL は永続化できないので復元時にクリア
+    // onRestoreWithContext をサポートするため、reduceで累積しながら処理
     return panels
       .filter((p) => getPanelContentDef(p.type))
-      .map((p) => {
+      .reduce<FloatingPanelState[]>((restored, p) => {
         const def = getPanelContentDef(p.type);
-        if (def?.onRestore) {
-          return { ...p, contentState: def.onRestore(p.contentState) };
+        let contentState = p.contentState;
+        if (def?.onRestoreWithContext) {
+          contentState = def.onRestoreWithContext(contentState, {
+            restoredPanels: restored,
+          });
+        } else if (def?.onRestore) {
+          contentState = def.onRestore(contentState);
         }
-        return p;
-      });
+        return [...restored, { ...p, contentState }];
+      }, []);
   } catch {
     return [];
   }
@@ -97,6 +103,11 @@ export default function FloatingPanelManager() {
     const id = crypto.randomUUID();
     const z = nextZRef.current++;
     setPanels((prev) => {
+      // createInitialStateWithContext があればそちらを使用
+      const contentState = def.createInitialStateWithContext
+        ? def.createInitialStateWithContext({ existingPanels: prev })
+        : def.createInitialState();
+
       const offset = (prev.length % 5) * 30;
       return [
         ...prev,
@@ -108,7 +119,7 @@ export default function FloatingPanelManager() {
           panelHeight: def.defaultHeight ?? 250,
           opacity: 0.7,
           zIndex: z,
-          contentState: def.createInitialState(),
+          contentState,
         },
       ];
     });
@@ -145,6 +156,7 @@ export default function FloatingPanelManager() {
       const target = prev.find((p) => p.id === id);
       if (target) {
         const def = getPanelContentDef(target.type);
+        def?.onClose?.(target.contentState);
         def?.onCleanup?.(target.contentState);
       }
       return prev.filter((p) => p.id !== id);
@@ -155,6 +167,7 @@ export default function FloatingPanelManager() {
     setPanels((prev) => {
       for (const p of prev) {
         const def = getPanelContentDef(p.type);
+        def?.onClose?.(p.contentState);
         def?.onCleanup?.(p.contentState);
       }
       return [];

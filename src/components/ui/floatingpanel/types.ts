@@ -55,4 +55,17 @@ export interface PanelContentDef<
   onContentStateChange?: (oldState: T, newState: T) => void;
   /** localStorage から復元時に contentState を加工する */
   onRestore?: (state: T) => T;
+  /** localStorage から復元時に contentState を加工する（既に復元済みのパネル情報を参照可能） */
+  onRestoreWithContext?: (
+    state: T,
+    context: { restoredPanels: FloatingPanelState[] }
+  ) => T;
+  /** パネルが閉じられる直前に呼ばれる */
+  onClose?: (state: T) => void;
+  /** 動的にラベルを生成 */
+  getLabel?: (state: T) => string;
+  /** パネル作成時の初期状態を生成（既存パネル情報を参照できる版） */
+  createInitialStateWithContext?: (context: {
+    existingPanels: FloatingPanelState[];
+  }) => T;
 }

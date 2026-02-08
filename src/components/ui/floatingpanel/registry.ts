@@ -1,9 +1,10 @@
 import { PanelContentDef } from "./types";
 import { imagePanelDef } from "./content/image/imagePanelDef";
 import { memoPanelDef } from "./content/memo/memoPanelDef";
+import { canvasPanelDef } from "./content/canvas/canvasPanelDef";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const PANEL_CONTENT_DEFS: PanelContentDef<any>[] = [imagePanelDef, memoPanelDef];
+export const PANEL_CONTENT_DEFS: PanelContentDef<any>[] = [imagePanelDef, memoPanelDef, canvasPanelDef];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function getPanelContentDef(type: string): PanelContentDef<any> | undefined {

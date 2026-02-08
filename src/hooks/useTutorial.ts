@@ -174,16 +174,16 @@ export function useTutorial(): UseTutorialReturn {
     goToStep(firstValid);
   }, [tutorial, findValidStep, goToStep]);
 
-  // Auto-open on first visit or when version changes
-  useEffect(() => {
-    if (!tutorial) return;
-    if (hasSeenLatest(tutorial)) return;
-
-    const timer = setTimeout(() => {
-      open();
-    }, 300);
-    return () => clearTimeout(timer);
-  }, [tutorial, open]);
+  // Auto-open on first visit or when version changes (currently disabled)
+  // useEffect(() => {
+  //   if (!tutorial) return;
+  //   if (hasSeenLatest(tutorial)) return;
+  //
+  //   const timer = setTimeout(() => {
+  //     open();
+  //   }, 300);
+  //   return () => clearTimeout(timer);
+  // }, [tutorial, open]);
 
   // Close on route change
   useEffect(() => {
