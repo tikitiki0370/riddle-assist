@@ -107,6 +107,40 @@ const TUTORIALS: Record<string, PageTutorial> = {
       },
     ],
   },
+  "/text-mapping": {
+    pageId: "text-mapping",
+    version: 1,
+    steps: [
+      {
+        target: "textmapping-input",
+        placement: "bottom",
+        title: "暗号テキストの入力",
+        description:
+          "記号で置き換えられた暗号テキストを入力またはペーストします。",
+      },
+      {
+        target: "textmapping-palette",
+        placement: "bottom",
+        title: "シンボルパレット",
+        description:
+          "キーボードから入力しにくい特殊記号をクリックで追加できます。",
+      },
+      {
+        target: "textmapping-table",
+        placement: "bottom",
+        title: "マッピングの設定",
+        description:
+          "各記号に対応する文字を入力します。オレンジ枠は未設定、赤枠は重複を示します。",
+      },
+      {
+        target: "textmapping-preview",
+        placement: "top",
+        title: "デコード結果",
+        description:
+          "マッピングが適用された結果がリアルタイムで表示されます。オレンジ色の文字をクリックすると対応する入力欄にジャンプします。",
+      },
+    ],
+  },
   "/text-image": {
     pageId: "text-image",
     version: 1,
