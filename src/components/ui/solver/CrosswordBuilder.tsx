@@ -3,10 +3,10 @@ import {
   Box,
   Button,
   Center,
+  Grid,
   HStack,
   Input,
   NumberInput,
-  SimpleGrid,
   Text,
   VStack,
 } from "@chakra-ui/react";
@@ -101,8 +101,6 @@ export default function CrosswordBuilder() {
     setTexts(Array(total).fill(""));
   };
 
-  const CELL_SIZE = "28px";
-
   if (mode === "input") {
     return (
       <VStack gap={6} align="stretch">
@@ -121,35 +119,36 @@ export default function CrosswordBuilder() {
         </HStack>
 
         <Center>
-          <Box w="fit-content">
-            <SimpleGrid columns={cols} gap="1px">
-              {Array.from({ length: total }).map((_, i) =>
-                mask[i] ? (
-                  <Input
-                    key={i}
-                    ref={(el) => { inputRefs.current[i] = el; }}
-                    w={CELL_SIZE}
-                    h={CELL_SIZE}
-                    minW={0}
-                    p={0}
-                    textAlign="center"
-                    fontSize="sm"
-                    borderRadius={0}
-                    value={texts[i]}
-                    onChange={(e) => handleTextChange(i, e.target.value)}
-                    onKeyDown={(e) => handleKeyDown(i, e)}
-                  />
-                ) : (
-                  <Box
-                    key={i}
-                    w={CELL_SIZE}
-                    h={CELL_SIZE}
-                    bg="black"
-                  />
-                ),
-              )}
-            </SimpleGrid>
-          </Box>
+          <Grid
+            templateColumns={`repeat(${cols}, 1fr)`}
+            gap="1px"
+            maxW={`${cols * 41}px`}
+            w="100%"
+          >
+            {Array.from({ length: total }).map((_, i) =>
+              mask[i] ? (
+                <Input
+                  key={i}
+                  ref={(el) => { inputRefs.current[i] = el; }}
+                  aspectRatio={1}
+                  minW={0}
+                  p={0}
+                  textAlign="center"
+                  fontSize="xs"
+                  borderRadius={0}
+                  value={texts[i]}
+                  onChange={(e) => handleTextChange(i, e.target.value)}
+                  onKeyDown={(e) => handleKeyDown(i, e)}
+                />
+              ) : (
+                <Box
+                  key={i}
+                  aspectRatio={1}
+                  bg="black"
+                />
+              ),
+            )}
+          </Grid>
         </Center>
       </VStack>
     );
@@ -215,23 +214,25 @@ export default function CrosswordBuilder() {
       </HStack>
 
       <Center>
-        <Box w="fit-content">
-          <SimpleGrid columns={cols} gap="1px">
-            {Array.from({ length: total }).map((_, i) => (
-              <Box
-                key={i}
-                w={CELL_SIZE}
-                h={CELL_SIZE}
-                bg={mask[i] ? "bg" : "black"}
-                borderWidth="1px"
-                borderColor="border"
-                cursor="pointer"
-                onClick={() => toggleCell(i)}
-                _hover={{ opacity: 0.7 }}
-              />
-            ))}
-          </SimpleGrid>
-        </Box>
+        <Grid
+          templateColumns={`repeat(${cols}, 1fr)`}
+          gap="1px"
+          maxW={`${cols * 41}px`}
+          w="100%"
+        >
+          {Array.from({ length: total }).map((_, i) => (
+            <Box
+              key={i}
+              aspectRatio={1}
+              bg={mask[i] ? "bg" : "black"}
+              borderWidth="1px"
+              borderColor="border"
+              cursor="pointer"
+              onClick={() => toggleCell(i)}
+              _hover={{ opacity: 0.7 }}
+            />
+          ))}
+        </Grid>
       </Center>
     </VStack>
   );
