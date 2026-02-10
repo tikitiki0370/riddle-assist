@@ -9,7 +9,8 @@ interface UseDragOptions {
 interface UseDragReturn {
   onPointerDown: (e: React.PointerEvent) => void;
   onPointerMove: (e: React.PointerEvent) => void;
-  onPointerUp: (e: React.PointerEvent) => void;
+  onPointerUp: () => void;
+  onPointerCancel: () => void;
 }
 
 export function useDrag({ position, onMove }: UseDragOptions): UseDragReturn {
@@ -44,5 +45,9 @@ export function useDrag({ position, onMove }: UseDragOptions): UseDragReturn {
     offsetRef.current = null;
   }, []);
 
-  return { onPointerDown, onPointerMove, onPointerUp };
+  const onPointerCancel = useCallback(() => {
+    offsetRef.current = null;
+  }, []);
+
+  return { onPointerDown, onPointerMove, onPointerUp, onPointerCancel };
 }

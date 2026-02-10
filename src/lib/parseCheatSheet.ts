@@ -11,7 +11,7 @@ export type CheatSheetGroup = {
 };
 
 export function parseCheatSheet(raw: string): CheatSheetData {
-	const frontmatterMatch = raw.match(/^---\n([\s\S]*?)\n---\n/);
+	const frontmatterMatch = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n/);
 	const frontmatter = frontmatterMatch?.[1] ?? "";
 	const titleMatch = frontmatter.match(/title:\s*(.+)/);
 	const title = titleMatch?.[1].trim() ?? "";

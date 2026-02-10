@@ -56,6 +56,8 @@ export default function FloatingPanel({
     startPosY: number;
   } | null>(null);
 
+  const focusRef = useRef<HTMLElement | null>(null);
+
   const onMove = useCallback(
     (pos: { x: number; y: number }) =>
       onUpdateChrome(panel.id, { position: pos }),
@@ -162,10 +164,11 @@ export default function FloatingPanel({
         onPointerDown={(e) => {
           onBringToFront(panel.id);
           dragHandlers.onPointerDown(e);
+          focusRef.current?.focus();
         }}
         onPointerMove={dragHandlers.onPointerMove}
         onPointerUp={dragHandlers.onPointerUp}
-        onPointerCancel={dragHandlers.onPointerUp}
+        onPointerCancel={dragHandlers.onPointerCancel}
       >
         <HStack gap={1}>
           <LuGripHorizontal />
@@ -191,6 +194,7 @@ export default function FloatingPanel({
           panelWidth={panel.panelWidth}
           panelHeight={panel.panelHeight}
           onContentStateChange={(patch) => onUpdateContent(panel.id, patch)}
+          focusRef={focusRef}
         />
       </Box>
 
@@ -227,10 +231,11 @@ export default function FloatingPanel({
         onPointerDown={(e) => {
           onBringToFront(panel.id);
           dragHandlers.onPointerDown(e);
+          focusRef.current?.focus();
         }}
         onPointerMove={dragHandlers.onPointerMove}
         onPointerUp={dragHandlers.onPointerUp}
-        onPointerCancel={dragHandlers.onPointerUp}
+        onPointerCancel={dragHandlers.onPointerCancel}
       >
         <IconButton
           aria-label="閉じる"

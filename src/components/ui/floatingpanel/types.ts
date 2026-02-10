@@ -1,4 +1,4 @@
-import { ComponentType } from "react";
+import { ComponentType, RefObject } from "react";
 import { IconType } from "react-icons";
 
 /** パネルの共通状態（ウィンドウ枠側が管理） */
@@ -26,6 +26,7 @@ export interface PanelContentProps<
   panelWidth: number;
   panelHeight: number;
   onContentStateChange: (patch: Partial<T>) => void;
+  focusRef?: RefObject<HTMLElement | null>;
 }
 
 /** コンテンツ固有のコントロールコンポーネントが受け取る props */

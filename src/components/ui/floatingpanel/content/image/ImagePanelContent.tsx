@@ -11,6 +11,7 @@ export interface ImageContentState extends Record<string, unknown> {
 export default function ImagePanelContent({
   contentState,
   onContentStateChange,
+  focusRef,
 }: PanelContentProps<ImageContentState>) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -70,7 +71,18 @@ export default function ImagePanelContent({
 
   if (contentState.imageUrl) {
     return (
-      <Box flex={1} minH={0}>
+      <Box
+        ref={focusRef as React.RefObject<HTMLDivElement>}
+        flex={1}
+        minH={0}
+        tabIndex={0}
+        outline="none"
+        pointerEvents="auto"
+        onPaste={handlePaste}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
+      >
         <img
           src={contentState.imageUrl}
           alt="overlay"
@@ -97,6 +109,7 @@ export default function ImagePanelContent({
       bg={{ base: "white", _dark: "gray.800" }}
     >
       <Box
+        ref={focusRef as React.RefObject<HTMLDivElement>}
         w="100%"
         h="100%"
         display="flex"
