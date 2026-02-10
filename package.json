@@ -7,16 +7,13 @@
 		"build": "next build --webpack",
 		"start": "next start",
 		"lint": "next lint",
-		"deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
-		"upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
-		"preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-		"cf-typegen": "wrangler types --env-interface CloudflareEnv ./cloudflare-env.d.ts"
+		"deploy": "next build --webpack && wrangler pages deploy out --project-name riddle-assist",
+		"preview": "next build --webpack && wrangler pages dev out"
 	},
 	"dependencies": {
 		"@chakra-ui/react": "^3.31.0",
 		"@emotion/react": "^11.14.0",
-		"@opennextjs/cloudflare": "^1.15.1",
-		"@tiptap/extension-font-family": "^3.19.0",
+"@tiptap/extension-font-family": "^3.19.0",
 		"@tiptap/extension-highlight": "^3.19.0",
 		"@tiptap/extension-link": "^3.19.0",
 		"@tiptap/extension-subscript": "^3.19.0",

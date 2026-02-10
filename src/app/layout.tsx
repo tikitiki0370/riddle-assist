@@ -6,8 +6,6 @@ import LeftSidebar from "@/components/ui/LeftSidebar";
 import FloatingPanelManager from "@/components/ui/floatingpanel/FloatingPanelManager";
 import TutorialOverlay from "@/components/ui/tutorial/TutorialOverlay";
 
-export const dynamic = "force-static";
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
