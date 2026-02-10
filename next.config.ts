@@ -1,6 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+	async redirects() {
+		return [
+			{
+				source: "/solver",
+				destination: "/solver/magic",
+				permanent: false,
+			},
+		];
+	},
 	webpack: (config) => {
 		config.module.rules.push({
 			test: /\.md$/,

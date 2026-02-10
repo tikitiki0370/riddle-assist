@@ -59,7 +59,7 @@ export default function LeftSidebar() {
             justifyContent="flex-start"
             w="100%"
           >
-            <Link href="/" prefetch={false}>
+            <Link href="/">
               <AiOutlineFontSize /> Text Converter
             </Link>
           </Button>
@@ -72,7 +72,7 @@ export default function LeftSidebar() {
                 variant="ghost"
                 size="sm"
               >
-                <Link href="/" prefetch={false}>
+                <Link href="/">
                   <AiOutlineFontSize />
                 </Link>
               </IconButton>
@@ -87,7 +87,7 @@ export default function LeftSidebar() {
             justifyContent="flex-start"
             w="100%"
           >
-            <Link href="/sheet" prefetch={false}>
+            <Link href="/sheet">
               <LuTable /> CheetSheet
             </Link>
           </Button>
@@ -100,7 +100,7 @@ export default function LeftSidebar() {
                 variant="ghost"
                 size="sm"
               >
-                <Link href="/sheet" prefetch={false}>
+                <Link href="/sheet">
                   <LuTable />
                 </Link>
               </IconButton>
@@ -115,7 +115,7 @@ export default function LeftSidebar() {
             justifyContent="flex-start"
             w="100%"
           >
-            <Link href="/translate" prefetch={false}>
+            <Link href="/translate">
               <LuLanguages /> Translate
             </Link>
           </Button>
@@ -128,7 +128,7 @@ export default function LeftSidebar() {
                 variant="ghost"
                 size="sm"
               >
-                <Link href="/translate" prefetch={false}>
+                <Link href="/translate">
                   <LuLanguages />
                 </Link>
               </IconButton>
@@ -143,7 +143,7 @@ export default function LeftSidebar() {
             justifyContent="flex-start"
             w="100%"
           >
-            <Link href="/input" prefetch={false}>
+            <Link href="/input">
               <LuGrid3X3 /> Input Text
             </Link>
           </Button>
@@ -156,7 +156,7 @@ export default function LeftSidebar() {
                 variant="ghost"
                 size="sm"
               >
-                <Link href="/input" prefetch={false}>
+                <Link href="/input">
                   <LuGrid3X3 />
                 </Link>
               </IconButton>
@@ -171,7 +171,7 @@ export default function LeftSidebar() {
             justifyContent="flex-start"
             w="100%"
           >
-            <Link href="/text-image" prefetch={false}>
+            <Link href="/text-image">
               <LuImage /> Text Image
             </Link>
           </Button>
@@ -184,7 +184,7 @@ export default function LeftSidebar() {
                 variant="ghost"
                 size="sm"
               >
-                <Link href="/text-image" prefetch={false}>
+                <Link href="/text-image">
                   <LuImage />
                 </Link>
               </IconButton>
@@ -199,7 +199,7 @@ export default function LeftSidebar() {
             justifyContent="flex-start"
             w="100%"
           >
-            <Link href="/text-mapping" prefetch={false}>
+            <Link href="/text-mapping">
               <LuArrowLeftRight /> Text Mapping
             </Link>
           </Button>
@@ -212,7 +212,7 @@ export default function LeftSidebar() {
                 variant="ghost"
                 size="sm"
               >
-                <Link href="/text-mapping" prefetch={false}>
+                <Link href="/text-mapping">
                   <LuArrowLeftRight />
                 </Link>
               </IconButton>
@@ -227,7 +227,7 @@ export default function LeftSidebar() {
             justifyContent="flex-start"
             w="100%"
           >
-            <Link href="/solver" prefetch={false}>
+            <Link href="/solver">
               <LuPuzzle /> Puzzle Solver
             </Link>
           </Button>
@@ -240,7 +240,7 @@ export default function LeftSidebar() {
                 variant="ghost"
                 size="sm"
               >
-                <Link href="/solver" prefetch={false}>
+                <Link href="/solver">
                   <LuPuzzle />
                 </Link>
               </IconButton>
