@@ -10,6 +10,7 @@ const config = defineConfig({
   theme: {
     slotRecipes: {
       segmentGroup: {
+        slots: ["root", "item", "indicator", "label", "itemText", "itemControl"],
         base: {
           item: { cursor: "pointer" },
         },
