@@ -1,7 +1,7 @@
 import { TranslateEntry, PresetConfig } from "@/types/translate";
 
 // プリセットID一覧（コード内で定義）
-export const PRESET_IDS = ["dancing-men", "electroharmonix", "utopia", "gl-runen"] as const;
+export const PRESET_IDS = ["dancing-men", "electroharmonix", "utopia", "gl-runen", "standard-galactic"] as const;
 
 // デフォルトエントリ（新規作成用）
 export const DEFAULT_ENTRIES: Record<string, TranslateEntry[]> = {

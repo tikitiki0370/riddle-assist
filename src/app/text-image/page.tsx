@@ -7,6 +7,7 @@ import {
   Heading,
   HStack,
   Input,
+  NumberInput,
   Slider,
   Switch,
   Text,
@@ -75,7 +76,7 @@ export default function TextImagePage() {
 
           {/* コントロール */}
           <HStack data-tutorial="textimage-controls" gap={6} flexWrap="wrap" align="center">
-            {/* 列数スライダー */}
+            {/* 列数 */}
             <HStack gap={2}>
               <HStack gap={2} opacity={hasNewlines ? 0.4 : 1}>
                 <Text fontSize="sm" flexShrink={0}>
@@ -98,9 +99,25 @@ export default function TextImagePage() {
                     <Slider.Thumbs />
                   </Slider.Control>
                 </Slider.Root>
-                <Text fontSize="sm" w="30px" textAlign="right">
-                  {columns}
-                </Text>
+                <NumberInput.Root
+                  w="80px"
+                  size="sm"
+                  min={1}
+                  max={64}
+                  step={1}
+                  value={String(columns)}
+                  onValueChange={(details) => {
+                    const v = details.valueAsNumber;
+                    if (!isNaN(v) && v >= 1 && v <= 64) setColumns(v);
+                  }}
+                  disabled={hasNewlines}
+                >
+                  <NumberInput.Control>
+                    <NumberInput.IncrementTrigger />
+                    <NumberInput.DecrementTrigger />
+                  </NumberInput.Control>
+                  <NumberInput.Input />
+                </NumberInput.Root>
               </HStack>
               {hasNewlines && (
                 <Button
