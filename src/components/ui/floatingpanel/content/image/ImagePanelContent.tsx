@@ -1,11 +1,14 @@
 "use client";
 import { Box, Text, VStack } from "@chakra-ui/react";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { LuUpload } from "react-icons/lu";
 import { PanelContentProps } from "../../types";
 
 export interface ImageContentState extends Record<string, unknown> {
   imageUrl: string | null;
+  flipH?: boolean;
+  flipV?: boolean;
+  rotation?: number;
 }
 
 export default function ImagePanelContent({
@@ -14,7 +17,34 @@ export default function ImagePanelContent({
   focusRef,
 }: PanelContentProps<ImageContentState>) {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const roRef = useRef<ResizeObserver | null>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const [containerSize, setContainerSize] = useState({ w: 0, h: 0 });
+
+  const setRefs = useCallback(
+    (el: HTMLDivElement | null) => {
+      if (roRef.current) {
+        roRef.current.disconnect();
+        roRef.current = null;
+      }
+      if (focusRef && "current" in focusRef) {
+        (focusRef as React.MutableRefObject<HTMLElement | null>).current = el;
+      }
+      if (el) {
+        const ro = new ResizeObserver(([entry]) => {
+          const { width, height } = entry.contentRect;
+          setContainerSize({ w: width, h: height });
+        });
+        ro.observe(el);
+        roRef.current = ro;
+      }
+    },
+    [focusRef]
+  );
+
+  useEffect(() => {
+    return () => roRef.current?.disconnect();
+  }, []);
 
   const handleFile = useCallback(
     (file: File) => {
@@ -70,9 +100,18 @@ export default function ImagePanelContent({
   );
 
   if (contentState.imageUrl) {
+    const rotation = contentState.rotation ?? 0;
+    const isOrthogonal = rotation % 180 !== 0;
+    let fitScale = 1;
+    if (isOrthogonal && containerSize.w > 0 && containerSize.h > 0) {
+      fitScale =
+        Math.min(containerSize.w, containerSize.h) /
+        Math.max(containerSize.w, containerSize.h);
+    }
+
     return (
       <Box
-        ref={focusRef as React.RefObject<HTMLDivElement>}
+        ref={setRefs}
         flex={1}
         minH={0}
         tabIndex={0}
@@ -92,6 +131,15 @@ export default function ImagePanelContent({
             height: "100%",
             objectFit: "contain",
             display: "block",
+            transform:
+              [
+                rotation ? `rotate(${rotation}deg)` : "",
+                fitScale !== 1 ? `scale(${fitScale})` : "",
+                contentState.flipH ? "scaleX(-1)" : "",
+                contentState.flipV ? "scaleY(-1)" : "",
+              ]
+                .filter(Boolean)
+                .join(" ") || undefined,
           }}
         />
       </Box>
