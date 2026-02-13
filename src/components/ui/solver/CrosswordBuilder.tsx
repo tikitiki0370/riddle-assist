@@ -144,7 +144,7 @@ export default function CrosswordBuilder() {
                 <Box
                   key={i}
                   aspectRatio={1}
-                  bg="black"
+                  bg="fg"
                 />
               ),
             )}
@@ -224,7 +224,7 @@ export default function CrosswordBuilder() {
             <Box
               key={i}
               aspectRatio={1}
-              bg={mask[i] ? "bg" : "black"}
+              bg={mask[i] ? "bg" : "fg"}
               borderWidth="1px"
               borderColor="border"
               cursor="pointer"

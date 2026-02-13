@@ -64,7 +64,7 @@ export default function CheatSheetTable({ title, rows }: Props) {
 										{body.map((row, rowIdx) => (
 											<Table.Row key={rowIdx}>
 												{row.map((cell, cellIdx) => (
-													<Table.Cell key={cellIdx} textAlign="center">
+													<Table.Cell key={cellIdx} textAlign="center" wordBreak="break-all" whiteSpace="normal">
 														{cell}
 													</Table.Cell>
 												))}
