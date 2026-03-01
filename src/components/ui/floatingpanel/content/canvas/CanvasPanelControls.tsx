@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, HStack, IconButton, VStack } from "@chakra-ui/react";
-import { LuTrash2, LuUndo2 } from "react-icons/lu";
+import { LuHand, LuTrash2, LuUndo2 } from "react-icons/lu";
 import { PanelControlsProps } from "../../types";
 import { CanvasContentState } from "./CanvasPanelContent";
 import OpacitySlider from "../../shared/OpacitySlider";
@@ -71,6 +71,21 @@ export default function CanvasPanelControls({
         ))}
 
         <Box w="1px" h={5} bg="border" mx={1} />
+
+        <IconButton
+          aria-label="移動モード"
+          size="2xs"
+          variant="ghost"
+          borderWidth={(contentState.mode ?? "draw") === "move" ? 2 : 0}
+          borderColor="blue.500"
+          onClick={() =>
+            onContentStateChange({
+              mode: (contentState.mode ?? "draw") === "move" ? "draw" : "move",
+            })
+          }
+        >
+          <LuHand />
+        </IconButton>
 
         <IconButton
           aria-label="元に戻す"

@@ -96,21 +96,24 @@ export default function FloatingPanel({
       const dx = e.clientX - startX;
       const dy = e.clientY - startY;
 
+      const maxW = window.innerWidth;
+      const maxH = window.innerHeight;
+
       let newWidth: number, newX: number;
       if (sideH === "right") {
-        newWidth = Math.max(200, Math.min(1200, startWidth + dx));
+        newWidth = Math.max(200, Math.min(maxW, startWidth + dx));
         newX = startPosX;
       } else {
-        newWidth = Math.max(200, Math.min(1200, startWidth - dx));
+        newWidth = Math.max(200, Math.min(maxW, startWidth - dx));
         newX = startPosX + (startWidth - newWidth);
       }
 
       let newHeight: number, newY: number;
       if (sideV === "bottom") {
-        newHeight = Math.max(100, Math.min(1200, startHeight + dy));
+        newHeight = Math.max(100, Math.min(maxH, startHeight + dy));
         newY = startPosY;
       } else {
-        newHeight = Math.max(100, Math.min(1200, startHeight - dy));
+        newHeight = Math.max(100, Math.min(maxH, startHeight - dy));
         newY = startPosY + (startHeight - newHeight);
       }
 
@@ -144,7 +147,7 @@ export default function FloatingPanel({
       h={`${panel.panelHeight}px`}
       minW="200px"
       minH="100px"
-      maxW="80vw"
+      maxW="100vw"
       borderWidth={1}
       borderRadius="md"
       overflow="hidden"
