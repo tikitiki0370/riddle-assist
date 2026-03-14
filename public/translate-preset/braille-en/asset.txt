@@ -1,0 +1,6 @@
+点字フォント SixBraille 202002a 版
+長野高専 電子情報工学科 伊藤祥一 様
+
+License is public domain.
+See below URL for detail.
+http://teacher.nagano-nct.ac.jp/ito/downloads/font/
