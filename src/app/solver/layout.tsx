@@ -12,6 +12,7 @@ import { usePathname, useRouter } from "next/navigation";
 const solverTypes = [
   { value: "magic", label: "魔法陣" },
   { value: "crossword", label: "クロスワード" },
+  { value: "anagram", label: "アナグラム" },
 ] as const;
 
 export default function SolverLayout({

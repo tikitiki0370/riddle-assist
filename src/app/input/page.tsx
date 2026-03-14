@@ -20,6 +20,7 @@ import MeshInput from "@/components/ui/meshinput/MeshInput";
 import KeyboardInput from "@/components/ui/keyboardinput/KeyboardInput";
 import { QWERTY_LAYOUT, JIS_KANA_LAYOUT } from "@/components/ui/keyboardinput/keyboardData";
 import { FLICK_KEYS, FLICK_KEYS_EN } from "@/lib/flickInput/keyMapping";
+import PeriodicTableInput from "@/components/ui/periodictable/PeriodicTableInput";
 
 export default function InputPage() {
   const [result, setResult] = useState("");
@@ -110,6 +111,12 @@ export default function InputPage() {
 
           {/* メッシュ暗号入力 */}
           <MeshInput onInput={handleInput} />
+
+          {/* 元素記号（周期表） */}
+          <VStack gap={1}>
+            <Text fontSize="xs" color="gray.400">元素記号</Text>
+            <PeriodicTableInput onInput={handleInput} />
+          </VStack>
         </VStack>
       </Container>
     </Box>

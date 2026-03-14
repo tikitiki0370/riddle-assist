@@ -136,6 +136,9 @@ export default function CrosswordBuilder() {
                   textAlign="center"
                   fontSize="xs"
                   borderRadius={0}
+                  bg="white"
+                  color="black"
+                  borderColor="gray.400"
                   value={texts[i]}
                   onChange={(e) => handleTextChange(i, e.target.value)}
                   onKeyDown={(e) => handleKeyDown(i, e)}
@@ -144,7 +147,7 @@ export default function CrosswordBuilder() {
                 <Box
                   key={i}
                   aspectRatio={1}
-                  bg="fg"
+                  bg="black"
                 />
               ),
             )}
@@ -224,9 +227,9 @@ export default function CrosswordBuilder() {
             <Box
               key={i}
               aspectRatio={1}
-              bg={mask[i] ? "bg" : "fg"}
+              bg={mask[i] ? "white" : "black"}
               borderWidth="1px"
-              borderColor="border"
+              borderColor="gray.400"
               cursor="pointer"
               onClick={() => toggleCell(i)}
               _hover={{ opacity: 0.7 }}
