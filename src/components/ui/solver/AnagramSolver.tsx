@@ -13,12 +13,11 @@ import { LuBookOpen, LuClipboard, LuLoader, LuTrash2 } from "react-icons/lu";
 import { generateAnagrams } from "@/lib/solverEngine/puzzle/anagram";
 import {
   fetchDictionaries,
-  listMatchExact,
+  anagramMatch,
   type DictionaryInfo,
 } from "@/lib/api/wordsearch";
 
 const MAX_LENGTH = 10;
-const MAX_MATCH_COUNT = 10000;
 
 export default function AnagramSolver() {
   const [input, setInput] = useState("");
@@ -77,7 +76,7 @@ export default function AnagramSolver() {
     setIsMatching(true);
     setMatchError(null);
     try {
-      const matched = await listMatchExact(selectedDict, results, controller.signal);
+      const matched = await anagramMatch(selectedDict, input, controller.signal);
       if (!controller.signal.aborted) {
         setMatchedWords(new Set(matched));
       }
@@ -91,10 +90,7 @@ export default function AnagramSolver() {
     }
   };
 
-  const canMatch =
-    results.length > 0 &&
-    results.length <= MAX_MATCH_COUNT &&
-    selectedDict !== "";
+  const canMatch = input.length > 0 && selectedDict !== "";
   const matchedList = useMemo(
     () => (matchedWords ? results.filter((r) => matchedWords.has(r)) : []),
     [matchedWords, results]
@@ -158,11 +154,6 @@ export default function AnagramSolver() {
               {isMatching ? <LuLoader /> : <LuBookOpen />}
               {isMatching ? "検索中..." : "辞書マッチ"}
             </Button>
-            {results.length > MAX_MATCH_COUNT && (
-              <Text fontSize="xs" color="fg.muted">
-                結果が多すぎるため辞書マッチできません
-              </Text>
-            )}
           </HStack>
 
           {matchError && (

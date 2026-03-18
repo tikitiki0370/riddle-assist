@@ -85,3 +85,35 @@ export async function listMatchExact(
 
   return matched;
 }
+
+interface AnagramMatchResponse {
+  dict: string;
+  input: string;
+  matched: string[];
+  total: number;
+}
+
+export async function anagramMatch(
+  dictId: string,
+  text: string,
+  signal?: AbortSignal
+): Promise<string[]> {
+  const apiBase = getApiBase();
+  const res = await fetch(
+    `${apiBase}/api/v1/solver/anagram/match?dict=${encodeURIComponent(dictId)}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text }),
+      signal,
+    }
+  );
+  if (!res.ok) {
+    const body = await res.json().catch(() => null);
+    throw new Error(
+      (body as { error?: string })?.error ?? `API error: ${res.status}`
+    );
+  }
+  const data: AnagramMatchResponse = await res.json();
+  return data.matched;
+}
