@@ -60,15 +60,15 @@ export default function LeftSidebar() {
             w="100%"
           >
             <Link href="/">
-              <AiOutlineFontSize /> Text Converter
+              <AiOutlineFontSize /> コンバーター
             </Link>
           </Button>
         ) : (
           <HStack justify="center">
-            <Tooltip content="Text to" positioning={{ placement: "right" }}>
+            <Tooltip content="コンバーター" positioning={{ placement: "right" }}>
               <IconButton
                 asChild
-                aria-label="Text to"
+                aria-label="コンバーター"
                 variant="ghost"
                 size="sm"
               >
@@ -88,15 +88,15 @@ export default function LeftSidebar() {
             w="100%"
           >
             <Link href="/sheet">
-              <LuTable /> CheetSheet
+              <LuTable /> チートシート
             </Link>
           </Button>
         ) : (
           <HStack justify="center">
-            <Tooltip content="CheetSheet" positioning={{ placement: "right" }}>
+            <Tooltip content="チートシート" positioning={{ placement: "right" }}>
               <IconButton
                 asChild
-                aria-label="CheetSheet"
+                aria-label="チートシート"
                 variant="ghost"
                 size="sm"
               >
@@ -116,15 +116,15 @@ export default function LeftSidebar() {
             w="100%"
           >
             <Link href="/translate">
-              <LuLanguages /> Translate
+              <LuLanguages /> 翻訳機
             </Link>
           </Button>
         ) : (
           <HStack justify="center">
-            <Tooltip content="Translate" positioning={{ placement: "right" }}>
+            <Tooltip content="翻訳機" positioning={{ placement: "right" }}>
               <IconButton
                 asChild
-                aria-label="Translate"
+                aria-label="翻訳機"
                 variant="ghost"
                 size="sm"
               >
@@ -144,15 +144,15 @@ export default function LeftSidebar() {
             w="100%"
           >
             <Link href="/input">
-              <LuGrid3X3 /> Input Text
+              <LuGrid3X3 /> 入力ツール
             </Link>
           </Button>
         ) : (
           <HStack justify="center">
-            <Tooltip content="Input Text" positioning={{ placement: "right" }}>
+            <Tooltip content="入力ツール" positioning={{ placement: "right" }}>
               <IconButton
                 asChild
-                aria-label="Input Text"
+                aria-label="入力ツール"
                 variant="ghost"
                 size="sm"
               >
@@ -172,15 +172,15 @@ export default function LeftSidebar() {
             w="100%"
           >
             <Link href="/text-image">
-              <LuImage /> Text Image
+              <LuImage /> ビットマップ
             </Link>
           </Button>
         ) : (
           <HStack justify="center">
-            <Tooltip content="Text Image" positioning={{ placement: "right" }}>
+            <Tooltip content="ビットマップ" positioning={{ placement: "right" }}>
               <IconButton
                 asChild
-                aria-label="Text Image"
+                aria-label="ビットマップ"
                 variant="ghost"
                 size="sm"
               >
@@ -200,15 +200,15 @@ export default function LeftSidebar() {
             w="100%"
           >
             <Link href="/text-mapping">
-              <LuArrowLeftRight /> Text Mapping
+              <LuArrowLeftRight /> マッピング
             </Link>
           </Button>
         ) : (
           <HStack justify="center">
-            <Tooltip content="Text Mapping" positioning={{ placement: "right" }}>
+            <Tooltip content="マッピング" positioning={{ placement: "right" }}>
               <IconButton
                 asChild
-                aria-label="Text Mapping"
+                aria-label="マッピング"
                 variant="ghost"
                 size="sm"
               >
@@ -228,15 +228,15 @@ export default function LeftSidebar() {
             w="100%"
           >
             <Link href="/solver">
-              <LuPuzzle /> Puzzle Solver
+              <LuPuzzle /> パズルソルバー
             </Link>
           </Button>
         ) : (
           <HStack justify="center">
-            <Tooltip content="Puzzle Solver" positioning={{ placement: "right" }}>
+            <Tooltip content="パズルソルバー" positioning={{ placement: "right" }}>
               <IconButton
                 asChild
-                aria-label="Puzzle Solver"
+                aria-label="パズルソルバー"
                 variant="ghost"
                 size="sm"
               >
